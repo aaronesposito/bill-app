@@ -34,6 +34,7 @@
 
 ### Deployment
 - [ ] Add project to Jenkins
+- [ ] Add env variables in credentials
 - [ ] Jenkins Groovy file for pipeline
 - [ ] Test Build
 - [ ] Cloudflare for webhooks
