@@ -17,7 +17,7 @@
 - [ ] Bill Crud Routes
 - [ ] Account Crud Routes
 - [ ] Auth0 API integration
-- [ ] Migration function
+- [x] Migration function
 
 #### Poller :
 - [ ] Server boilerplate
@@ -26,9 +26,9 @@
 - [ ] Email notification integration (Mailjs)
 
 ### Database (Postgres)
-- [ ] Build with docker compose
-- [ ] Include Pgadmin
-- [ ] tables built from migration on api
+- [x] Build with docker compose
+- [x] Include Pgadmin
+- [x] tables built from migration on api
 
 ## CI/CD
 
