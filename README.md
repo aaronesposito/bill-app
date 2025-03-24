@@ -1,14 +1,8 @@
 # Bill Tracker App
 
 ## Services
-
-### Hosting (Docker)
-
-- [ ] Docker-compose file
-- [ ] Docker file for back-end
   
 ### Front End (REACT)
-
 - [ ] Login Page
 - [ ] Dashboard
 - [ ] List View
@@ -19,7 +13,6 @@
 ### Back End (Express)
 
 #### API :
-
 - [ ] Bank Crud Routes
 - [ ] Bill Crud Routes
 - [ ] Account Crud Routes
@@ -39,7 +32,12 @@
 
 ## CI/CD
 
+### Deployment
 - [ ] Add project to Jenkins
 - [ ] Jenkins Groovy file for pipeline
 - [ ] Test Build
 - [ ] Cloudflare for webhooks
+
+### Hosting
+- [ ] Docker-Compose file
+- [ ] Dockerfile for express servers
