@@ -15,6 +15,7 @@ async function createUserTable () {
     const query = `
         CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
+        auth0_id TEXT UNIQUE,
         f_name VARCHAR(100),
         l_name VARCHAR(100),
         username VARCHAR(100)

@@ -15,4 +15,18 @@ const dbConfig = {
 const pgp = pgPromise()
 const db = pgp(`postgres://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.name}`)
 
-export default db
+async function getUserByAuthId (auth0_id) {
+    const user = await db.one(`SELECT * FROM users WHERE auth0_id = $1`, [auth0_id])
+    return user
+}
+
+async function createUser ({auth0_id, f_name, l_name, username}) {
+    await db.none(`
+        INSERT INTO users (auth0_id, f_name, l_name, username)
+        VALUES ($1, $2, $3, $4)
+        `, 
+        [auth0_id, f_name, l_name, username]
+    )
+}
+
+export {getUserByAuthId, createUser}
