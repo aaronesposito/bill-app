@@ -77,3 +77,6 @@ Desktop.ini
 # --- LOG FILES ---
 *.log
 logs/
+
+# --- RANDOM ----
+*.txt
