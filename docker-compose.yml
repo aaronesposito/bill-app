@@ -1,0 +1,19 @@
+services:
+  bill-api:
+    build: ./bill-api
+    image: aarooon16045/bill-api:lts
+    ports: 
+      - "5004:5004"
+    restart: on-failure
+    volumes:
+      - ./bill-api:/srv/bill-api
+    working_dir: /srv/bill-api
+    command: ["flask", "run", "--host=0.0.0.0", "--port=5004", "--debug"]
+    env_file:
+      - .env
+    networks:
+      - database-network
+
+networks:
+  database-network:
+    external: true
