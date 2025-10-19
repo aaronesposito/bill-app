@@ -1,4 +1,4 @@
-from db_handler import execute_many, execute_query
+from utilities.db_handler import execute_many, execute_query
 import uuid
 
 
@@ -31,8 +31,8 @@ def create_user(data):
 
 def get_user(id):
     query = """
-        SELECT * FROM account WHERE id=%s
-        """
+            SELECT * FROM account WHERE id=%s
+            """
     result = execute_query(query, [id], fetch_one=True)
     return {
         "id": result[0],
@@ -43,10 +43,10 @@ def get_user(id):
 
 def delete_user(id):
     query = """
-            DELETE FROM account WHERE id=%s
+            WITH deleted AS (DELETE FROM account WHERE id=%s RETURNING *) SELECT count(*) FROM deleted;
             """
-    result = execute_query(query, [id])
-    return result
+    result = execute_query(query, [id], fetch_one=True)
+    return result[0]
 
 def validate_account(username):
     query = """
