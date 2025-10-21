@@ -59,7 +59,7 @@ def logout():
             status_code= 400
         )
     
-@bp.delete("/delete/<int:id>")
+@bp.delete("/<int:id>")
 def delete(id):
     result = delete_user(id)
     if result:

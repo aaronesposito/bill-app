@@ -59,7 +59,7 @@ def validate_account(username):
 
 def get_id(_uuid):
     query = """
-             SELECT account.id FROM account WHERE public_id = %(_uuid)s
+             SELECT account.id FROM account WHERE public_id = %s
             """
     result = execute_query(query, [_uuid], fetch_one=True)
     return result[0] if result else None

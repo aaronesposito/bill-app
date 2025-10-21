@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask, g
 from flask_cors import CORS
 from utilities.db_handler import DB_init
-from routes import auth
+from routes import auth, banks, bills
 from utilities.util import current_user
 import os
 
@@ -21,6 +21,8 @@ app.config.update(
 )
 
 app.register_blueprint(auth.bp)
+app.register_blueprint(banks.bp)
+app.register_blueprint(bills.bp)
 
 @app.before_request
 def load_user():
