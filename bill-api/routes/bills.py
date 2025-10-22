@@ -1,6 +1,6 @@
 from flask import request, Blueprint, g
 from utilities.util import success_response, error_response, login_required
-from queries.bills import create_bill, get_bill, get_bills, delete_bill, update_bill
+from queries.bills import create_bill, get_bill, get_bills, delete_bill, update_bill, bills_by_bank
 
 
 bp = Blueprint('bill', __name__, url_prefix="/bill")
@@ -18,7 +18,7 @@ def new_bill():
         )
     except Exception as e:
         return error_response(str(e), 400)
-    
+
 @bp.get("/all")
 @login_required
 def get_all_bills():
@@ -36,7 +36,7 @@ def get_all_bills():
             )
     except Exception as e:
         return error_response(str(e), 400)
-    
+
 @bp.get("/<int:id>")
 @login_required
 def get_one_bill(id):
@@ -54,7 +54,7 @@ def get_one_bill(id):
             )
     except Exception as e:
         return error_response(str(e), 400)
-        
+
 @bp.delete("/<int:id>")
 @login_required
 def delete_one_bill(id):
@@ -72,7 +72,7 @@ def delete_one_bill(id):
             )
     except Exception as e:
         return error_response(str(e), 400)
-    
+
 @bp.patch("/<int:id>")
 @login_required
 def update_one_bill(id):
@@ -92,3 +92,20 @@ def update_one_bill(id):
             )
     except Exception as e:
         return error_response(str(e), 400)
+
+@bp.get("/bank/<int:id>")
+@login_required
+def get_bills_by_bank(id):
+    try:
+        response = bills_by_bank(id)
+        if response:
+            return success_response(
+                data=response,
+                message="Bills retrieved successfully",
+                status_code=201
+            )
+    except Exception as e:
+        return error_response(
+            str(e),
+            status_code=400
+        )
