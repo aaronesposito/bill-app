@@ -27,7 +27,7 @@ def get_all_bills():
         if data:
             return success_response(
                 data=data,
-                status_code=201
+                status_code=200
             )
         else:
             return error_response(

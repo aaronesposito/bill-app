@@ -55,7 +55,7 @@ def validate_account(username):
             WHERE username = %s
             """
     result = execute_query(query, [username], fetch_one=True)
-    return {"username":result[0], "password_hash": result[1], "public_id": result[2]}
+    return {"username":result[0], "password_hash": result[1], "public_id": result[2]} if result else None
 
 def get_id(_uuid):
     query = """

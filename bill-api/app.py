@@ -8,7 +8,15 @@ from utilities.util import current_user
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(
+    app,
+    supports_credentials=True,
+    resources={
+        r"/*": {
+            "origins": "http://localhost:5004"
+        }
+    }
+)
 DB_init()
 load_dotenv()
 
@@ -17,7 +25,7 @@ app.config.update(
     PERMANENT_SESSION_LIFETIME=timedelta(days=7),
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=True 
+    SESSION_COOKIE_SECURE=False
 )
 
 app.register_blueprint(auth.bp)

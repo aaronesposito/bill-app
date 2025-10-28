@@ -1,7 +1,8 @@
-from flask import request, session, g, Blueprint
+from flask import request, session, g, Blueprint, jsonify
+from flask_cors import cross_origin
 from werkzeug.security import generate_password_hash, check_password_hash
 from utilities.util import success_response, error_response, login_required
-from queries.auth import check_duplicate_user, create_user, delete_user, validate_account
+from queries.auth import check_duplicate_user, create_user, delete_user, validate_account, get_id, get_user
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -28,11 +29,15 @@ def register():
     except Exception as e:
         return error_response(str(e), 400)
 
-@bp.post("/login")
+@bp.route("/login", methods=["OPTIONS", "POST"])
+@cross_origin(
+    origins="http://localhost:5004",
+    supports_credentials=True,
+)
 def login():
     data = request.get_json()
     response = validate_account(data["username"])
-    if not response["username"] or not check_password_hash(response["password_hash"], data["password"]):
+    if not response or not check_password_hash(response["password_hash"], data["password"]):
         return error_response(
             message="Login Failed",
             status_code=400
@@ -75,13 +80,20 @@ def delete(id):
 
 @bp.get("/me")
 def get_me():
-    if not g.user:
-        return error_response(
-            message="No active user"
-        )
-    return success_response(
-        message=f"User -> {g.user['id']}"
-    )
+    user_id = session.get("user_id")
+    if not user_id:
+        return jsonify({"loggedIn": False}), 200  # or 200 with logged_in False
+
+    internal_id = get_id(user_id)
+    user = get_user(internal_id)
+    if not user:
+        return jsonify({"loggedIn": False}), 200
+
+    # don't send sensitive stuff (password hash, etc.)
+    return jsonify({
+        "loggedIn": True,
+        "user": user["username"]
+    }), 200
 
 @bp.get("/secret")
 @login_required

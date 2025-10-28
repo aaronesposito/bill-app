@@ -23,4 +23,4 @@ ENV PYTHONUNBUFFERED=1
 # CMD ["waitress-serve", "--host=0.0.0.0", "--port=5003", "app:app"]
 
 # Uncomment for development mode
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5004", "--debug"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8081", "--debug"]
