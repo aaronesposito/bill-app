@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react'
 function AllBills() {
 
     const [bills, setBills] = useState([])
+    const [billsTotal, setBillsTotal] = useState(0)
+    const {banksTotal, setBanksTotal} = useState({})
 
     const getBills = async ()=>{
         await fetch('http://localhost:8081/bill/all', {
@@ -15,19 +17,36 @@ function AllBills() {
         })
         .then(async response=>{
             const billResponse = await response.json()
-            console.log(billResponse.data)
             setBills(billResponse.data)
         })
+    }
+
+    const billTotal = ()=> {
+        const total = (bills?? [] ).reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
+        setBillsTotal(total)
+    } 
+
+    const billTotalByBank = () => {
+        const totalByBank = (bills?? [] ).reduce((banks, bill) => {
+            const amt = Number(bill.amount) || 0;
+            acc[bill.bank_id] = (banks[b.bank_id] || 0) + amt;
+            }, {}
+        )
+        setBanksTotal(totalByBank)
     }
 
     useEffect(()=>{
         getBills()
     },[])
 
+    useEffect(()=>{
+        billTotal()
+    }, [bills])
 
     return (
         <>
             {bills?(
+            <>
             <table>
                 <thead>
                     <tr>
@@ -49,7 +68,29 @@ function AllBills() {
                         )
                     })}
                 </tbody>
-            </table>):(
+            </table>
+            <div>
+                Total: {billsTotal}
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bank</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {banksTotal.map((bank)=>{
+                        return (
+                            <tr key={bank.bank_id}>
+                                <td>{bank.bank_id}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+                </>
+            ):(
                 <></>
             )}
         </>

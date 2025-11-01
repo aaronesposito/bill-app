@@ -1,49 +1,123 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
-import Auth from './Auth.jsx'
-
+import { useLoginMutation, useLogoutMutation, useMeQuery } from '../app/AuthSlice.js'
+import { useNavigate } from 'react-router-dom'
 
 function Nav() {
 
-    const [showLinks, setShowLinks] = useState(false)
+    const { data: user, isLoading, isError, error, refetch} = useMeQuery()
+    const [logout, logoutResponse] = useLogoutMutation()
+    const [errorMessage, setErrorMessage] = useState("")
+    const [userData, setUserData] = useState({username: "", password: ""})
+    const [login, loginResponse] = useLoginMutation()
+    const navigate = useNavigate()
 
-    const handleLinks = (active) => {
-        setShowLinks(active)
+    const updatedUserData = (e) => {
+      const {name, value} = e.target
+      setUserData(prev => ({
+          ...prev,
+          [name]: value
+      }))
+  }
+
+  const handleLogin = async (e) => {
+      e.preventDefault()
+      try {
+        const data = await login(userData).unwrap()
+        await refetch()
+        if (data?.success) {
+          navigate('/bills')
+        }
+      }catch (err){
+         setErrorMessage(err?.data?.error ?? 'Login error')
+      }finally{
+        setUserData({username: "", password: ""})
+      }
+  }
+
+    const handleLogout = async () => {
+        try {
+            const res = await logout().unwrap()
+            if (res.success) {
+                navigate('/')
+                }
+        }catch (err){
+            setErrorMessage(err?.data?.error ?? 'Logout error');
+        }
+    };
+
+    const loggedIn = !!user?.loggedIn;
+
+    if (isError) {
+        return <div>Error</div>;
+    }
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
     return (
-        <>
-        {showLinks?(
-        <>
-            <nav>
+        <div>
+            {loggedIn?(
                 <div>
-                    <Link to="/home">
-                        <s>Link 1</s>
-                    </Link>
-                </div>
-                <div>
-                    <Link to="/Link 2">
-                        <s>Link 2</s>
-                    </Link>
-                </div>
-                <div>
-                    <Link to="/Link 3">
-                        <s>Link 3</s>
-                    </Link>
-                </div>
-                <div>
-                    <Link to="/Link 4">
-                        <s>Link 4</s>
-                    </Link>
-                </div>
-            </nav>
-            <Auth handleLinks={handleLinks}/>
-        </>
+                    <nav>
+                        <div>
+                            <Link to="/">
+                                <s>Home</s>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to="/bills">
+                                <s>Bills</s>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to="/Link 3">
+                                <s>Link 3</s>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to="/Link 4">
+                                <s>Link 4</s>
+                            </Link>
+                        </div>
+                    </nav>
+                <button type="button" onClick={handleLogout}>Logout</button>  
+            </div> 
         ):(
-            <Auth handleLinks={handleLinks}/>
+            <div>
+                <form onSubmit={handleLogin}>
+                    <label>
+                        Username
+                        <input
+                        type="text"
+                        name="username"
+                        value={userData.username}
+                        onChange={updatedUserData}
+                        required
+                        />
+                    </label>
+                    <br/>
+                    <label>
+                        Password
+                        <input
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={updatedUserData}
+                        required
+                        />
+                    </label>
+                    <br/>
+                    <button type="submit">Log in</button>
+                </form>
+                <div>
+                    {errorMessage}
+                </div>
+            </div>
         )
         }
-    </>
+        </div>
     )
 }
 
