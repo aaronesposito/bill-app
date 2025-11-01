@@ -40,17 +40,18 @@ def get_bill(id):
 def get_bills(uuid):
     user_id = get_id(uuid)
     query = """
-            SELECT * FROM bill
+            SELECT b.id, b.bill_name, ba.bank_name, amount, paid 
+            FROM bill as b
+            INNER JOIN bank as ba on b.bank_id = ba.id
             WHERE user_account = %s
             """
     result = execute_query(query, [user_id], fetch_all=True)
     return [{
         "id":row[0],
         "bill_name": row[1],
-        "user_account": row[2],
-        "bank_id": row[3],
-        "amount": row[4],
-        "paid": row[5]
+        "bank_name": row[2],
+        "amount": row[3],
+        "paid": row[4]
     } for row in result] if result else None
 
 def update_bill(data, id):

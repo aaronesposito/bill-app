@@ -1,51 +1,53 @@
 import {useState, useEffect} from 'react'
+import { useGetAllBillQuery } from '../app/BillSlice'
 
 
 function AllBills() {
 
-    const [bills, setBills] = useState([])
+    const {data:bills, isLoading} = useGetAllBillQuery()
     const [billsTotal, setBillsTotal] = useState(0)
-    const {banksTotal, setBanksTotal} = useState({})
-
-    const getBills = async ()=>{
-        await fetch('http://localhost:8081/bill/all', {
-            method: "GET",
-            headers: {'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            credentials: 'include'
-        })
-        .then(async response=>{
-            const billResponse = await response.json()
-            setBills(billResponse.data)
-        })
-    }
+    const [banksTotal, setBanksTotal] = useState({})
+    const [balances, setBalances] = useState({})
 
     const billTotal = ()=> {
-        const total = (bills?? [] ).reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
+        const total = (bills.data?? [] ).reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
         setBillsTotal(total)
     } 
 
     const billTotalByBank = () => {
-        const totalByBank = (bills?? [] ).reduce((banks, bill) => {
+        const totalByBank = (bills.data?? [] ).reduce((banks, bill) => {
             const amt = Number(bill.amount) || 0;
-            acc[bill.bank_id] = (banks[b.bank_id] || 0) + amt;
+            banks[bill.bank_name] = (banks[bill.bank_name] || 0) + amt;
+            return banks
             }, {}
         )
         setBanksTotal(totalByBank)
     }
 
-    useEffect(()=>{
-        getBills()
-    },[])
+    const dueAndPaid = () => {
+        const totals = (bills.data?? []).reduce((duePaid, bill)=>{
+            bill.paid ? duePaid.paid += bill.amount : duePaid.due += bill.amount
+            return duePaid
+        }, {paid:0, due:0})
+        setBalances(totals)
+    }
+
+    const dataLoaded=()=>{
+        return bills !== undefined
+    }
 
     useEffect(()=>{
+        if (bills) {
         billTotal()
+        billTotalByBank()
+        dueAndPaid()
+        console.log(bills.data)
+        }
     }, [bills])
 
     return (
         <>
-            {bills?(
+            {bills !== undefined ?(
             <>
             <table>
                 <thead>
@@ -57,11 +59,11 @@ function AllBills() {
                     </tr>
                 </thead>
                 <tbody>
-                    {bills.map((bill)=>{
+                    {(bills.data).map((bill)=>{
                         return (
                             <tr key={bill.id}>
                                 <td>{bill.bill_name}</td>
-                                <td>{bill.bank_id}</td>
+                                <td>{bill.bank_name}</td>
                                 <td>{bill.amount}</td>
                                 <td>{bill.paid?"Paid":"Unpaid"}</td>
                             </tr>
@@ -72,6 +74,9 @@ function AllBills() {
             <div>
                 Total: {billsTotal}
             </div>
+            <div>
+                Totals by bank:
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -80,10 +85,32 @@ function AllBills() {
                     </tr>
                 </thead>
                 <tbody>
-                    {banksTotal.map((bank)=>{
+                    {Object.entries(banksTotal).map(([key, value])=>{
                         return (
-                            <tr key={bank.bank_id}>
-                                <td>{bank.bank_id}</td>
+                            <tr key={key}>
+                                <td>{key}</td>
+                                <td>{value}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <div>
+                Totals Paid and Unpaid:
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.entries(balances).map(([key, value])=>{
+                        return (
+                            <tr key={key}>
+                                <td>{key}</td>
+                                <td>{value}</td>
                             </tr>
                         )
                     })}
