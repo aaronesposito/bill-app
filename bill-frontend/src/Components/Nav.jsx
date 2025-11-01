@@ -63,22 +63,22 @@ function Nav() {
                     <nav>
                         <div>
                             <Link to="/">
-                                <s>Home</s>
+                                Home
                             </Link>
                         </div>
                         <div>
                             <Link to="/bills">
-                                <s>Bills</s>
+                                Bills
                             </Link>
                         </div>
                         <div>
-                            <Link to="/Link 3">
-                                <s>Link 3</s>
+                            <Link to="/bills/create">
+                                Create Bill
                             </Link>
                         </div>
                         <div>
                             <Link to="/Link 4">
-                                <s>Link 4</s>
+                                Link 4
                             </Link>
                         </div>
                     </nav>

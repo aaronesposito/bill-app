@@ -41,7 +41,6 @@ function AllBills() {
         billTotal()
         billTotalByBank()
         dueAndPaid()
-        console.log(bills.data)
         }
     }, [bills])
 
