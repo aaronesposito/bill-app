@@ -71,16 +71,6 @@ function Nav() {
                                 Bills
                             </Link>
                         </div>
-                        <div>
-                            <Link to="/bills/create">
-                                Create Bill
-                            </Link>
-                        </div>
-                        <div>
-                            <Link to="/Link 4">
-                                Link 4
-                            </Link>
-                        </div>
                     </nav>
                 <button type="button" onClick={handleLogout}>Logout</button>  
             </div> 

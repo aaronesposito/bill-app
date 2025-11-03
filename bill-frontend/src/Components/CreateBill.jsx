@@ -1,14 +1,12 @@
 import { useCreateBillMutation } from "../app/BillSlice"
 import { useGetAllBankQuery } from "../app/BankSlice"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 
-function CreateBill(){
+function CreateBill({submitCallback}){
     const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:0.00})
     const {data: banks, isLoading, isError} = useGetAllBankQuery()
     const [createBill, createBillResponse] = useCreateBillMutation()
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
 
     const updateBillData = (e) => {
       const {name, value} = e.target
@@ -18,12 +16,14 @@ function CreateBill(){
       }))
     }
 
+
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try {
             const res = await createBill(billData).unwrap()
             if (res?.success){
-                navigate('/bills')
+                setBillData({bill_name:"", bank_id:0, amount:0.00})
+                submitCallback()
             }
         }catch(err){
             setErrorMessage("Error Occurred Creating Bill")
@@ -78,6 +78,7 @@ function CreateBill(){
             <br/>
             <button type='submit'>Submit</button> 
         </form>
+        <button type="button" onClick={submitCallback}>Cancel</button>
         {errorMessage?(<div>{errorMessage}</div>):(<></>)}
         </>
     )

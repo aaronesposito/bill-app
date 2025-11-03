@@ -34,8 +34,8 @@ export const BillApi = createApi({
             })
         }),
         updateBill: builder.mutation({
-            query: (data)=>({
-                url: `/bill/${data.id}`,
+            query: ({id, data})=>({
+                url: `/bill/${id}`,
                 method: 'PATCH',
                 body: {...data}
             })
