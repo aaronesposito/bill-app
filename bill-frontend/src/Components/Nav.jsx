@@ -71,6 +71,11 @@ function Nav() {
                                 Bills
                             </Link>
                         </div>
+                        <div>
+                            <Link to="/banks">
+                                Banks
+                            </Link>
+                        </div>
                     </nav>
                 <button type="button" onClick={handleLogout}>Logout</button>  
             </div> 

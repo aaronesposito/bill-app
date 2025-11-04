@@ -35,9 +35,11 @@ def get_all_banks():
                 status_code=201
             )
         else:
-            return error_response(
+            return success_response(
                 message="No banks found",
-                status_code=404
+                # return a blank array if nothing is found
+                data=[],
+                status_code=200
             )
     except Exception as e:
         return error_response(str(e), 400)

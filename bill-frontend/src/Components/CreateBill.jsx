@@ -39,6 +39,10 @@ function CreateBill({submitCallback}){
         return <div>Error</div>
     }
 
+    if (banks.data.length==0){
+        return <div>Create A Bank First</div>
+    }
+
     return(
         <>
         <form onSubmit={handleSubmit}>

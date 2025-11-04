@@ -30,9 +30,10 @@ def get_all_bills():
                 status_code=200
             )
         else:
-            return error_response(
+            return success_response(
                 message="No bills found",
-                status_code=404
+                data=[],
+                status_code=200
             )
     except Exception as e:
         return error_response(str(e), 400)

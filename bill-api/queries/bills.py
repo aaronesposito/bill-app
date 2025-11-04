@@ -61,7 +61,7 @@ def update_bill(data, id):
     for key in data.keys():
         if key not in allowed_keys:
             return None
-        if data[key]:
+        if data[key] != None:
             patch[key] = data[key]
     fields = ", ".join([f"{key} = %({key})s" for key in patch.keys()])
     query = f"""

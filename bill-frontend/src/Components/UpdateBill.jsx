@@ -23,8 +23,9 @@ function UpdateBill({submitCallback, billID}){
         e.preventDefault()
         try{
             const res = await update({id:billID, data: billData}).unwrap()
+            setBillData({bill_name:"", bank_id:0, amount:0.00})
             submitCallback()
-        }catch(err){
+        }catch{
             setErrorMessage(err?.data?.error ?? 'Error updating Bill')
         }
     }
@@ -61,7 +62,7 @@ function UpdateBill({submitCallback, billID}){
                 </label>
                 <br/>
                 <label>
-                    bank_id
+                    Bank
                     <select name="bank_id" onChange={handleChange}>
                         <option value='0'></option>
                         {banks.data.map((bank)=>{
