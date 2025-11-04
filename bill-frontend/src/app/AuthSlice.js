@@ -9,6 +9,15 @@ export const AuthApi = createApi({
         baseUrl: 'http://localhost:8081',
     }),
     endpoints: (builder) => ({
+        signup: builder.mutation({
+            query: (data)=>{
+                return({
+                    url: "/auth/signup",
+                    method: 'POST',
+                    body: {...data}
+                })
+            }
+        }),
         login: builder.mutation({
             query: (data) => {
                 return({
@@ -50,6 +59,7 @@ export const AuthApi = createApi({
 
 
 export const {
+    useSignupMutation,
     useLoginMutation,
     useLogoutMutation,
     useMeQuery,

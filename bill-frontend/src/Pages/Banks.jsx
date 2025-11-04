@@ -1,19 +1,20 @@
 import {useState, useEffect} from 'react'
 import ReactModal from 'react-modal'
 import { useGetAllBankQuery, useCreateBankMutation, useDeleteBankMutation } from '../app/BankSlice'
-import AllBills from './AllBills'
+import { useGetAllBillQuery } from '../app/BillSlice'
 
 
 function Banks(){
 
-    const {data:banks, isLoading, isError, refetch } = useGetAllBankQuery()
+    const {data:bills, isLoading:billsIsLoading, isError:billsIsError} = useGetAllBillQuery()
+    const {data:banks, isLoading:banksIsLoading, isError:banksIsError, refetch} = useGetAllBankQuery()
     const [createBank, createBankResponse ] = useCreateBankMutation()
     const [deleteBank, deleteBankResponse ] = useDeleteBankMutation()
     const [errorMessage, setErrorMessage] = useState("")
     const [bankData, setBankData] = useState("")
-    const [confirmation, setConfirmation] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
-    const [targetBank, setTargetBank] = useState(0)
+    const [targetBank, setTargetBank] = useState({id:0, bank_name:""})
+    const [hasBills, setHasBills] = useState(false)
 
 
     
@@ -35,21 +36,40 @@ function Banks(){
         }
     }
 
-    const handleModal=(e)=>{
-        setTargetBank(e.target.value)
+    const checkEmpty=(bankToCheck)=>{
+        if (bills && bankToCheck){
+            for (let i = 0; i < bills.data.length; i++) {
+                let billValues = Object.values([...bills.data][i])
+                if (billValues.includes(bankToCheck)) {
+                    setHasBills(true)
+                    break
+                }
+            }
+        }
+    }
+
+    const handleModalOpen=(e)=>{
+        setTargetBank({id:e.target.value, bank_name:e.target.dataset.bankName})
         setModalOpen(true)
     }
 
-    const handleConfirmation=(e)=>{
-        setConfirmation(e.target.value)
+    const handleModalClose=()=>{
+        setTargetBank({id:0, bank_name:""})
         setModalOpen(false)
+        setHasBills(false)
+    }
+
+    const handleConfirmation=()=>{
+        setModalOpen(false)
+        handleDelete()
     }
 
     const handleDelete=async()=>{
         try{
-            const res = await deleteBank(targetBank).unwrap()
+            const res = await deleteBank(targetBank.id).unwrap()
             if (res?.success) {
                 await refetch()
+                setTargetBank({id:0, bank_name:""})
             }
         }catch(err){
             setErrorMessage(err?.data?.error ?? 'Error Deleting Bank')
@@ -61,18 +81,15 @@ function Banks(){
     }, [banks])
 
     useEffect(()=>{
-        if (confirmation) {
-            handleDelete()
-            setConfirmation(false)
-        }
-    }, [confirmation])
+        checkEmpty(targetBank.bank_name)
+    }, [targetBank])
 
         
-    if (isLoading) {
+    if (billsIsLoading || banksIsLoading) {
         return <div>Loading...</div>
     }
 
-    if (isError) {
+    if (billsIsError || banksIsError) {
         return <div>Error</div>
     }
 
@@ -92,9 +109,10 @@ function Banks(){
                                 <td>{bank.bank_name}</td>
                                 <td>
                                     <button 
-                                    value={bank.id} 
+                                    value={bank.id}
+                                    data-bank-name={bank.bank_name} 
                                     type='button'
-                                    onClick={handleModal}
+                                    onClick={handleModalOpen}
                                     >X</button>
                                 </td>
                             </tr>
@@ -123,10 +141,21 @@ function Banks(){
                 ariaHideApp={false}
                 contentLabel="Delete Confirmation"
             >
-                <p>Are you sure?</p>
-                <button value={true} type='button' onClick={handleConfirmation}>CONFIRM</button>
-                <button value={false} type='button' onClick={handleConfirmation}>CANCEL</button>
+                {!hasBills?(
+                    <>
+                    <p>Are you sure?</p>
+                    <button value={true} type='button' onClick={handleConfirmation}>CONFIRM</button>
+                    <button type='button' onClick={()=>setModalOpen(false)}>CANCEL</button>
+                    </>
+                ):(
+                    <>
+                    <p>Cannot delete a bank that has associated bills</p>
+                    <button type='button' onClick={handleModalClose}>CANCEL</button>
+                    </>
+                )}
+                
             </ReactModal>
+            {errorMessage?(<div>{errorMessage}</div>):(<></>)}
         </>
     )
 }

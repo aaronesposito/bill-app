@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { useLoginMutation, useLogoutMutation, useMeQuery } from '../app/AuthSlice.js'
 import { useNavigate } from 'react-router-dom'
+import keyImage from '../assets/key.svg'
+import personImage from '../assets/person.svg'
 
 function Nav() {
 
@@ -39,7 +41,7 @@ function Nav() {
         try {
             const res = await logout().unwrap()
             if (res.success) {
-                navigate('/')
+                navigate('/home')
                 }
         }catch (err){
             setErrorMessage(err?.data?.error ?? 'Logout error');
@@ -59,57 +61,64 @@ function Nav() {
     return (
         <div>
             {loggedIn?(
-                <div>
-                    <nav>
-                        <div>
-                            <Link to="/">
-                                Home
+                <>
+                    <nav className='nav-container'>
+                            <Link className='nav-button' to="/bills">
+                                    Bills
                             </Link>
-                        </div>
-                        <div>
-                            <Link to="/bills">
-                                Bills
+                            <Link className='nav-button' to="/banks">
+                                <div>
+                                    Banks
+                                </div>
                             </Link>
-                        </div>
-                        <div>
-                            <Link to="/banks">
-                                Banks
-                            </Link>
-                        </div>
+                            <button className='logout-button' type="button" onClick={handleLogout}>Logout</button>  
                     </nav>
-                <button type="button" onClick={handleLogout}>Logout</button>  
-            </div> 
+                
+            </> 
         ):(
-            <div>
-                <form onSubmit={handleLogin}>
-                    <label>
-                        Username
-                        <input
-                        type="text"
-                        name="username"
-                        value={userData.username}
-                        onChange={updatedUserData}
-                        required
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        Password
-                        <input
-                        type="password"
-                        name="password"
-                        value={userData.password}
-                        onChange={updatedUserData}
-                        required
-                        />
-                    </label>
-                    <br/>
-                    <button type="submit">Log in</button>
-                </form>
+            <nav className='nav-container'>
+                <Link className='nav-button' to="/signup">
+                        Signup
+                </Link>
                 <div>
-                    {errorMessage}
+                    <form className='form-container' onSubmit={handleLogin}>
+                        <div className='input-container'>
+                            <div>
+                                <div className="input-formatter">
+                                    <img className='tag' src={personImage}/>
+                                    |
+                                    <input
+                                    className="input"
+                                    type="text"
+                                    name="username"
+                                    placeholder='Username'
+                                    value={userData.username}
+                                    onChange={updatedUserData}
+                                    required
+                                    />
+                                </div>
+                                <div className="input-formatter">
+                                    <img className='tag' src={keyImage}/>
+                                    |
+                                    <input
+                                    className="input"
+                                    type="password"
+                                    name="password"
+                                    placeholder='Password'
+                                    value={userData.password}
+                                    onChange={updatedUserData}
+                                    required
+                                    />
+                                </div>
+                            </div>
+                        <button id='login-button' type="submit">Log in</button>
+                        </div>
+                    </form>
+                    <div>
+                        {errorMessage}
+                    </div>
                 </div>
-            </div>
+            </nav>
         )
         }
         </div>

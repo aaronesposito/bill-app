@@ -48,6 +48,17 @@ function AllBills() {
         }, {paid:0, due:0})
         setBalances(totals)
     }   
+
+    const toggleAllUnpaid=async()=>{
+        bills.data.map(async(bill)=>{
+            try{
+                const res = await update({id:bill.id, data:{paid:false}}).unwrap()
+            }catch (err){
+                    setErrorMessage(err?.data?.error ?? 'Update Error')
+            }
+        })
+        handleBillsUpdate()
+    }
     
     const togglePaid=async(bill)=>{
         try{
@@ -200,6 +211,7 @@ function AllBills() {
                         )
                     })}
                 </select>
+                <button type='button' onClick={toggleAllUnpaid}>Set All Unpaid</button>
             </label>
             <table>
                 <thead>

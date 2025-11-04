@@ -16,14 +16,21 @@ services:
 
   bill-frontend:
     image: node:lts-bullseye
-    command: bash -c "npm install && npm run dev -- --host 0.0.0.0 --port 5004"
     working_dir: /app
+    command: bash -c "npm install && npm run dev -- --host 0.0.0.0 --port 5004"
     volumes:
-        - ./bill-frontend:/app
+      - ./bill-frontend:/app:rw
+      # keep node_modules inside the container so the bind mount doesn't shadow it
+      - /app/node_modules
     environment:
-        VITE_API_HOST: ${REACT_APP_API_HOST}
+      # ensure Vite/chokidar polls for changes across the bind mount
+      CHOKIDAR_USEPOLLING: "true"
+      # optional but often helps on Docker Desktop
+      WATCHPACK_POLLING: "true"
+      # your existing var
+      VITE_API_HOST: ${REACT_APP_API_HOST}
     ports:
-        - "5004:5004"
+      - "5004:5004"
     env_file:
       - .env
 

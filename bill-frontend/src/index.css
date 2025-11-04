@@ -1,0 +1,5 @@
+html, body { min-height: 100dvh; }
+
+body {
+background: linear-gradient(to bottom, rgb(170, 223, 188), rgb(175, 240, 196), rgb(161, 235, 198));   
+}
