@@ -85,18 +85,14 @@ function AllBills() {
         const av = a?.[key];
         const bv = b?.[key];
 
-        // null/undefined last
         if (av == null && bv == null) return 0;
         if (av == null) return 1;
         if (bv == null) return -1;
 
-        // numbers
         if (typeof av === "number" && typeof bv === "number") return -(av - bv);
 
-        // booleans (true first; flip for false first)
         if (typeof av === "boolean" && typeof bv === "boolean") return av === bv ? 0 : av ? -1 : 1;
 
-        // strings (case-insensitive, numeric-aware)
         return String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: "base" });
     };
 

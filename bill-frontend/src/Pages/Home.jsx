@@ -1,12 +1,12 @@
-
+import scrooge from '../assets/scrooge.jpg'
 
 function Home() {
 
 
     return(
         <>
-            <div>
-                This is the landing page
+            <div className='inner-shadow-box'>
+                <img id='home-image'src={scrooge} />
             </div>
         </>
     )

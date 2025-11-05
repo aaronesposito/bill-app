@@ -80,7 +80,6 @@ function Nav() {
                 <Link className='nav-button' to="/signup">
                         Signup
                 </Link>
-                <div>
                     <form className='form-container' onSubmit={handleLogin}>
                         <div className='input-container'>
                             <div>
@@ -117,7 +116,6 @@ function Nav() {
                     <div>
                         {errorMessage}
                     </div>
-                </div>
             </nav>
         )
         }
