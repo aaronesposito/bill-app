@@ -1,9 +1,10 @@
 import { useCreateBillMutation } from "../app/BillSlice"
 import { useGetAllBankQuery } from "../app/BankSlice"
 import { useState } from "react"
+import styles from "../styles/Form.module.css"
 
 function CreateBill({submitCallback}){
-    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:0.00})
+    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:""})
     const {data: banks, isLoading, isError} = useGetAllBankQuery()
     const [createBill, createBillResponse] = useCreateBillMutation()
     const [errorMessage, setErrorMessage] = useState("")
@@ -44,47 +45,64 @@ function CreateBill({submitCallback}){
     }
 
     return(
-        <>
-        <form onSubmit={handleSubmit}>
-            <label>
-                Bill Name
-            <input
-            type="text"
-            name="bill_name"
-            value={billData.bill_name}
-            onChange={updateBillData}
-            required
-            />
-            </label>
-            <br/>
-            <label>
-                Bank
-            <select name="bank_id" onChange={updateBillData}>
-                <option value='0'></option>
-                {banks.data.map((bank)=>{
-                    return (
-                        <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
-                    )
-                })}
-            </select>
-            </label>
-            <br/>
-            <label>
-                Amount
-            <input
-            type="number"
-            name="amount"
-            value={billData.amount}
-            onChange={updateBillData}
-            required
-            />
-            </label>
-            <br/>
-            <button type='submit'>Submit</button> 
-        </form>
-        <button type="button" onClick={submitCallback}>Cancel</button>
-        {errorMessage?(<div>{errorMessage}</div>):(<></>)}
-        </>
+        <div id={styles.createFormContainer} className={styles.formContainer}>
+            <form onSubmit={handleSubmit}>
+                <div>
+                <label className={styles.formInputLabel}>
+                    <div className={styles.formTag}>
+                        Bill Name
+                    </div>
+                <input
+                className={styles.formInput}
+                type="text"
+                name="bill_name"
+                value={billData.bill_name}
+                onChange={updateBillData}
+                required
+                />
+                </label>
+                </div>
+                <br/>
+                <div>
+                <label id={styles.bankLabel} className={styles.formDropdownLabel}>
+                    <div id={styles.bankTag} className={styles.formTag}>
+                        Bank
+                    </div>
+                <select name="bank_id" id={styles.selectedBank} className={styles.formDropdown} onChange={updateBillData}>
+                    <option value='0'></option>
+                    {banks.data.map((bank)=>{
+                        return (
+                            <option  key={bank.id} value={bank.id}>{bank.bank_name}</option>
+                        )
+                    })}
+                </select>
+                </label>
+                </div>
+                <br/>
+                <div>
+                <label id={styles.amountLabel} className={styles.formInputLabel}>
+                    <div  id={styles.amountTag} className={styles.formTag}>
+                        Amount
+                    </div>
+                <input
+                id={styles.billAmount}
+                className={styles.formInput}
+                type="number"
+                name="amount"
+                value={billData.amount}
+                onChange={updateBillData}
+                required
+                />
+                </label>
+                </div>
+                <br/>
+                <div className={styles.buttonContainer}>
+                <button id={styles.submitButton} className="good-button" type='submit'>Submit</button>
+                <button id={styles.cancelButton} className="bad-button" type='button' onClick={submitCallback}>Cancel</button>
+                </div>
+            </form>
+            {errorMessage?(<div>{errorMessage}</div>):(<></>)}
+        </div>
     )
 }
 

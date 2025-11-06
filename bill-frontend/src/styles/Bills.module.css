@@ -1,0 +1,220 @@
+/* Bills.module.css */
+
+
+
+.table-container {
+    display:flex;
+    justify-content: space-evenly;
+    background-color: white;
+    border: 2px solid rgba(0, 0, 0, 0.219);
+    border-radius: 10px; 
+    overflow: hidden;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 15px
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.header {
+    font-size: x-large;
+    box-sizing: border-box;
+    font-weight: 500;
+    background: linear-gradient(to bottom, #c1f784 5%, #b3e458 100%);
+    width: 100%;
+    padding: 10px
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.062);
+    height: 30px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.062);
+    height: 30px;
+    padding: 5px;
+}
+
+.table-controller {
+    display:flex
+}
+
+.sort {
+    display: flex;
+    margin-right: 10px;
+    height: 30px;
+    align-items: center;
+}   
+
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.total-container {
+    display: flex;
+    background-color: white;
+    width: min-content;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.377)
+}
+
+.total-label {
+    padding: 8px;
+    background: #b3e458;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px 0 0 5px;
+    border-right: 1px solid black
+
+}
+
+.total-amount {
+    padding: 8px;
+    background: #e2f7bb;
+    height: 100%;
+    width: 100%;
+    border-radius: 0 5px 5px 0;
+}
+
+.subdata-container {
+    width: 100%
+}
+
+.small-table-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.small-table-header {
+    background-color: #b3e458;
+    border-radius: 5px 5px 0 0;
+    padding: 4px;
+    border: 1px solid black;
+}
+
+.small-table-data {
+    background-color: #e2f7bb;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid black;
+
+}
+
+.small-table-row {
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    border-bottom: 1px solid black;
+}
+
+.small-table-value {
+    width:auto;
+    padding: 5px 10px;
+    width: 50%;
+    border-left: 1px solid black 
+}
+
+.data-form-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subdata {
+    width: 30%
+}
+
+.bottom-right-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+.form-container {
+    margin-top: 15px;
+}
+
+.newBillButton {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(8, 6, 1, 0.247);
+  }
+
+.modal-style {
+    background: #d4ebc9;
+    border-radius: 8px;
+    top: 30vw;
+    left: 40vw;
+    right: 40vw;
+    bottom: 30vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.123);
+}
+
+
+.modal-buttons {
+    display: flex;
+    width: 20vw;
+    justify-content: space-evenly;
+}
+
+#text {
+    padding: 20px;
+    text-align: center;
+}
+
+#confirm, #cancel {
+    padding: 14px
+}
+
+#filter-button {
+    margin-left: 10px;
+    height: 30px
+}
+
+#toggle, #update, #delete {
+    width: 30px;
+    padding: 5px;
+}
+
+#submit-button {
+    text-wrap: nowrap ;
+    width: min-content;
+    align-content: center;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+}
+
+
+
+   

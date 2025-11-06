@@ -4,6 +4,8 @@ import { useLoginMutation, useLogoutMutation, useMeQuery } from '../app/AuthSlic
 import { useNavigate } from 'react-router-dom'
 import keyImage from '../assets/key.svg'
 import personImage from '../assets/person.svg'
+import bankImage from '../assets/bank.png'
+import styles from '../styles/Nav.module.css'
 
 function Nav() {
 
@@ -41,7 +43,7 @@ function Nav() {
         try {
             const res = await logout().unwrap()
             if (res.success) {
-                navigate('/home')
+                navigate('/')
                 }
         }catch (err){
             setErrorMessage(err?.data?.error ?? 'Logout error');
@@ -59,65 +61,66 @@ function Nav() {
     }
 
     return (
-        <div>
+        <div className={styles.headerContainer}>
+                <img className= {styles.headerImage} src={bankImage}/>
             {loggedIn?(
-                <>
-                    <nav className='nav-container'>
-                            <Link className='nav-button' to="/bills">
+                    <nav className={styles.navContainer}>
+                            <Link className={styles.navButton} to="/bills">
                                     Bills
                             </Link>
-                            <Link className='nav-button' to="/banks">
+                            <Link className={styles.navButton} to="/banks">
                                 <div>
                                     Banks
                                 </div>
                             </Link>
-                            <button className='logout-button' type="button" onClick={handleLogout}>Logout</button>  
+                            <div className={styles.logoutContainer}>
+                                <button id={styles.logoutButton} className="bad-button" type="button" onClick={handleLogout}>Logout</button>
+                            </div>  
                     </nav>
                 
-            </> 
         ):(
-            <nav className='nav-container'>
-                <Link className='nav-button' to="/signup">
+            <nav className={styles.navContainer}>
+                <Link className={styles.navButton} to="/signup">
                         Signup
                 </Link>
-                    <form className='form-container' onSubmit={handleLogin}>
-                        <div className='input-container'>
-                            <div>
-                                <div className="input-formatter">
-                                    <img className='tag' src={personImage}/>
-                                    |
-                                    <input
-                                    className="input"
-                                    type="text"
-                                    name="username"
-                                    placeholder='Username'
-                                    value={userData.username}
-                                    onChange={updatedUserData}
-                                    required
-                                    />
+                    <div className={styles.loginContainer}>
+                        <div className={styles.inputContainer}>
+                        <form className={styles.formContainer} onSubmit={handleLogin}>
+                                <div className={styles.loginFlex}>
+                                    <div className={styles.inputFormatter}>
+                                        <img className={styles.tag} src={personImage}/>
+                                        |
+                                        <input
+                                        className={styles.loginField}
+                                        type="text"
+                                        name="username"
+                                        placeholder='Username'
+                                        value={userData.username}
+                                        onChange={updatedUserData}
+                                        required
+                                        />
+                                    </div>
+                                    <div className={styles.inputFormatter}>
+                                        <img className={styles.tag} src={keyImage}/>
+                                        |
+                                        <input
+                                        className={styles.loginField}
+                                        type="password"
+                                        name="password"
+                                        placeholder='Password'
+                                        value={userData.password}
+                                        onChange={updatedUserData}
+                                        required
+                                        />
+                                    </div>
                                 </div>
-                                <div className="input-formatter">
-                                    <img className='tag' src={keyImage}/>
-                                    |
-                                    <input
-                                    className="input"
-                                    type="password"
-                                    name="password"
-                                    placeholder='Password'
-                                    value={userData.password}
-                                    onChange={updatedUserData}
-                                    required
-                                    />
-                                </div>
-                            </div>
-                        <button id='login-button' type="submit">Log in</button>
+                                <button className={styles.loginButton} type="submit">Log in</button>
+                        </form>
                         </div>
-                    </form>
-                    <div>
-                        {errorMessage}
                     </div>
             </nav>
         )
+        
         }
         </div>
     )

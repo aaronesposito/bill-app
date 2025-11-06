@@ -5,7 +5,7 @@ import AllBills from './Pages/AllBills.jsx'
 import Banks from './Pages/Banks.jsx'
 import SignUp from './Pages/SignUp.jsx'
 import Success from './Pages/Success.jsx'
-import './App.css'
+import "./styles/App.css"
 
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
     return(
       <>
         <Nav />
-        <div id='outer-wrapper'>
-          <div id='main-container'>
+        <div className="outer-wrapper">
+          <div className="main-container">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/bills" element={<AllBills />}/>

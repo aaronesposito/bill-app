@@ -16,5 +16,6 @@ export default defineConfig({
       port: 5004
       // If you access via http://127.0.0.1:5004, set host: '127.0.0.1'
     }
-  }
+  },
+  css: { modules: { localsConvention: 'camelCaseOnly' } }
 })

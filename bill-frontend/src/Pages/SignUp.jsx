@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useLoginMutation, useSignupMutation } from "../app/AuthSlice"
 import { useNavigate } from "react-router-dom"
+import styles from "../styles/Form.module.css"
 
 
 function SignUp(){
@@ -67,10 +68,13 @@ function SignUp(){
 
     return(
         <>
-        <form onSubmit={handleSubmit}>
-            <label>
-                Name 
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
+            <label className={styles.formInputLabel}>
+                <div className={styles.formTag}>
+                    Name
+                </div>
                 <input
+                    className={styles.formInput}
                     type='text'
                     name="full_name"
                     value={accountData.full_name}
@@ -79,9 +83,12 @@ function SignUp(){
                 />
             </label>
             <br/>
-            <label>
-                Username 
+            <label className={styles.formInputLabel}>
+                <div className={styles.formTag}>
+                Username
+                </div>
                 <input
+                    className={styles.formInput}
                     type='text'
                     name='username'
                     value={accountData.username}
@@ -90,9 +97,12 @@ function SignUp(){
                 />
             </label>
             <br/>
-            <label>
-                Password
+            <label className={styles.formInputLabel}>
+                <div className={styles.formTag}>
+                    Password
+                </div>
                 <input
+                    className={styles.formInput}
                     type='password'
                     name='password'
                     value={accountData.password}
@@ -101,9 +111,12 @@ function SignUp(){
                 />
             </label>
             <br/>
-            <label>
-                Password
+            <label className={styles.formInputLabel}>
+                <div className={styles.formTag}>
+                    Confirm
+                </div>
                 <input
+                    className={styles.formInput}
                     type='password'
                     value={passwordConfirmation}
                     onChange={handleConfirmationChange}
@@ -111,10 +124,12 @@ function SignUp(){
                 />
             </label>
             <br/>
-            <button type='submit'>Submit</button>
+            <div className={styles.buttonContainer}>
+                <button id={styles.submitButton} className="good-button" type='submit'>Submit</button>
+                <button id={styles.cancelButton} className="bad-button" type='button' onClick={handleCancel}>Cancel</button>
+            </div>
         </form>
         {errorMessage?(<div>{errorMessage}</div>):(<></>)}
-        <button type='button' onClick={handleCancel}>Cancel</button>
         </>
     )
 }

@@ -4,7 +4,7 @@ import { useGetAllBillQuery, useDeleteBillMutation, useUpdateBillMutation } from
 import { useGetAllBankQuery } from '../app/BankSlice'
 import CreateBill from '../Components/CreateBill'
 import UpdateBill from '../Components/UpdateBill'
-
+import styles from '../styles/Bills.module.css'
 
 function AllBills() {
 
@@ -81,6 +81,58 @@ function AllBills() {
             setBillUpdateTarget(e.target.value)
     }
 
+    const headers = ["header", "bill_name", "bank_name", "amount", "paid", "Toggle", "Update", "Delete"]
+
+    const renderCell = () => {
+        const sorted = [...(filteredBills ?? [])].sort(compareBy(sort));
+           let cols = headers.map((header) => {
+                    let col
+                    if (header !== 'header') {
+                        col = [<div key={header} className={styles.header}>{header}</div>]
+                    } else {
+                        col = []
+                    }
+                    col.push(sorted.map((bill) => {
+                        let row = ''
+                        switch (header) {
+                            case "Toggle":
+                                row =  <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
+                                break
+                            case "Update":
+                               
+                                row = <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
+                                
+                                break
+                            case "Delete":
+                                row = <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
+                                break
+                            case "paid":
+                                row = <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
+                                break
+                            case "header":
+                                break
+                            case "amount":
+                                row = <div className={styles.row}>${(bill?.[header].toFixed(2)) ?? ""}</div>
+                                break
+                            default:
+                                row = <div className={styles.row}>{bill?.[header] ?? ""}</div>
+                                break
+                            }
+                        return row
+                    }))
+                return col.reverse()
+                })
+                cols.splice(0,1)
+            return cols
+        }
+                    
+
+                
+
+
+
+
+
     const compareBy = (key) => (a, b) => {
         const av = a?.[key];
         const bv = b?.[key];
@@ -94,7 +146,7 @@ function AllBills() {
         if (typeof av === "boolean" && typeof bv === "boolean") return av === bv ? 0 : av ? -1 : 1;
 
         return String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: "base" });
-    };
+    }
 
     const updateFilter=()=>{
         if(bills){
@@ -165,7 +217,7 @@ function AllBills() {
     }
 
     useEffect(()=>{
-        if (confirmation) {
+        if (confirmation==='true') {
             handleDelete()
         }
     }, [confirmation])
@@ -176,7 +228,7 @@ function AllBills() {
 
     useEffect(()=>{
         if (bills) {
-            updateFilter()  
+            updateFilter()
         }
     }, [bills, filter])
 
@@ -187,8 +239,9 @@ function AllBills() {
     return (
         <>
             {bills !== undefined ?(
-            <>
-            <label>
+            <div>
+                <div className={styles.tableController}>
+            <label className= {styles.sort}>
                 Sort By:
                 <select name="sort" onChange={handleSortChange}>
                     <option value='bill_name'>Name</option>
@@ -197,7 +250,7 @@ function AllBills() {
                     <option value='paid'>Paid</option>
                 </select>
             </label>
-            <label>
+            <label className= {styles.filter}>
                 Filter By Bank:
                 <select name="filter" onChange={handleFilterChange}>
                     <option value='all'>No</option>
@@ -207,98 +260,94 @@ function AllBills() {
                         )
                     })}
                 </select>
-                <button type='button' onClick={toggleAllUnpaid}>Set All Unpaid</button>
+                <div>
+                    <button type='button' id={styles.filterButton} className="good-button" onClick={toggleAllUnpaid}>Set All Unpaid</button>
+                </div>
             </label>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bill</th>
-                        <th>Bank</th>
-                        <th>Amount</th>
-                        <th>Paid</th>
-                        <th>Toggle Paid</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {([...(filteredBills ?? [])].sort(compareBy(sort))).map((bill)=>{
-                        return (
-                            <tr key={bill.id}>
-                                <td>{bill.bill_name}</td>
-                                <td>{bill.bank_name}</td>
-                                <td>{bill.amount}</td>
-                                <td>{bill.paid?"Paid":"Unpaid"}</td>
-                                <td><button type='button' onClick={()=>togglePaid(bill)}>O</button></td>
-                                <td><button value={bill.id} type='button' onClick={showBillUpdate}>^</button></td>
-                                <td><button value={bill.id} type='button' onClick={handleModal}>X</button></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <div>
-                Total: {billsTotal}
             </div>
-            <div>
-                Totals by bank:
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bank</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.entries(banksTotal).map(([key, value])=>{
-                        return (
-                            <tr key={key}>
-                                <td>{key}</td>
-                                <td>{value}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <div>
-                Totals Paid and Unpaid:
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.entries(balances).map(([key, value])=>{
-                        return (
-                            <tr key={key}>
-                                <td>{key}</td>
-                                <td>{value}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            {!updateBill?(
-                <div>
-                    <button type='button' onClick={toggleBillCreate}>Create A New Bill</button>
-                    {createBill?<CreateBill submitCallback={handleNewBill} />:<></>}
+                <div className={styles.controller}>
+                    <div>
+                    <div className={styles.tableContainer}>
+                        {renderCell().map((cols)=>{
+                            return(
+                                <div  className={styles.column}>
+                                {cols.reverse().map((col)=>{
+                                    return col ? (col):(<></>)
+                                    })}
+                                </div>
+                            )
+                        })}
+
+                    </div>
+                    <div className={styles.dataFormContainer}>
+                        <div className={styles.subdata}>
+                            <div className={styles.totalContainer}>
+                                <div className={styles.totalLabel}>
+                                    Total: 
+                                </div>
+                                <div className={styles.totalAmount}>
+                                    ${(billsTotal.toFixed(2))}
+                                </div>
+                            </div>
+                            <div className={styles.smallTableContainer}>
+                                <div className={styles.smallTableHeader}>
+                                Totals by bank:
+                                </div>
+                                <div className={styles.smallTableData}>
+                                    {Object.entries(banksTotal).map(([key, value])=>{
+                                        return (
+                                            <div className={styles.smallTableRow} key={key}>
+                                                <div className={styles.smallTableValue}>{key}</div>
+                                                <div className={styles.smallTableValue}>${(value.toFixed(2))}</div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            <div className={styles.smallTableContainer}>
+                                <div className={styles.smallTableHeader}>
+                                Paid and Unpaid
+                                </div>
+                                <div className={styles.smallTableData}>
+                                    {Object.entries(balances).map(([key, value])=>{
+                                        return (
+                                            <div className={styles.smallTableRow} key={key}>
+                                                <div className={styles.smallTableValue}>{key}</div>
+                                                <div className={styles.smallTableValue}>${(value.toFixed(2))}</div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.bottomRightContainer}>
+                            {!updateBill?(
+                                <div>
+                                <div className={styles.newBillButton}>
+                                    <button type='button' id={styles.submitButton} className='good-button' onClick={toggleBillCreate}>New Bill</button>
+                                </div>
+                                    {createBill?<CreateBill submitCallback={handleNewBill} />:<></>}
+                                </div>
+
+                            ):(<></>)}
+                            {!createBill && updateBill?(
+                                <div>
+                                    <UpdateBill 
+                                    submitCallback={handleUpdateBill}
+                                    billID={billUpdateTarget} />
+                                </div>
+                                ):(<></>)}
+                        </div>
+                    </div>
                 </div>
-            ):(<></>)}
-            {!createBill && updateBill?(
-                <div>
-                    <UpdateBill 
-                    submitCallback={handleUpdateBill}
-                    billID={billUpdateTarget} />
-                </div>
-            ):(<></>)}
+
+            </div>
             
-                </>
+            
+            
+            </div>
             ):(
-                <></>
+            <></>
             )}
             <ReactModal 
                 isOpen={modalOpen}
@@ -306,11 +355,17 @@ function AllBills() {
                 shouldCloseOnEsc={false}
                 shouldCloseOnOverlayClick={false}
                 ariaHideApp={false}
-                contentLabel="Delete Confirmation"
+                contentLabel="Delete Confirmation" 
+                overlayClassName={styles.modalOverlay}
+                className={styles.modalStyle}
             >
+
                 <p>Are you sure?</p>
-                <button value={true} type='button' onClick={handleConfirmation}>CONFIRM</button>
-                <button value={false} type='button' onClick={handleConfirmation}>CANCEL</button>
+                <div className={styles.modalButtons}>
+                    <button value={true} id={styles.confirm} className='good-button' type='button' onClick={handleConfirmation}>CONFIRM</button>
+                    <button value={false}id={styles.cancel} className='bad-button' type='button' onClick={handleConfirmation}>CANCEL</button>
+                </div>
+
             </ReactModal>
         </>
     )

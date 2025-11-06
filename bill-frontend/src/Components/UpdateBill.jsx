@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { useUpdateBillMutation } from '../app/BillSlice'
 import { useGetAllBankQuery } from '../app/BankSlice'
 import { useGetOneBillQuery } from '../app/BillSlice'
+import styles from '../styles/Form.module.css'
 
 function UpdateBill({submitCallback, billID}){
 
@@ -48,46 +49,64 @@ function UpdateBill({submitCallback, billID}){
     }
 
     return(
-        <>
+        <div className={styles.formContainer}>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Bill Name
-                    <input
-                        type="text"
-                        name="bill_name"
-                        value={billData.bill_name}
-                        onChange={handleChange}
-                        required
-                     />
+                <div>
+                <label className={styles.formInputLabel}>
+                    <div className={styles.formTag}>
+                        Bill Name
+                    </div>
+                <input
+                className={styles.formInput}
+                type="text"
+                name="bill_name"
+                value={billData.bill_name}
+                onChange={handleChange}
+                required
+                />
                 </label>
+                </div>
                 <br/>
-                <label>
-                    Bank
-                    <select name="bank_id" onChange={handleChange}>
-                        <option value='0'></option>
-                        {banks.data.map((bank)=>{
-                            return (
-                                <option key={bank.id} value={bank.id}>{bank.bank_name}</option>
-                            )
-                        })}
-                    </select>
+                <div>
+                <label id={styles.bankLabel} className={styles.formDropdownLabel}>
+                    <div id={styles.bankTag} className={styles.formTag}>
+                        Bank
+                    </div>
+                <select name="bank_id" id={styles.selectedBank} className={styles.formDropdown} onChange={handleChange}>
+                    <option value='0'>Unchanged</option>
+                    {banks.data.map((bank)=>{
+                        return (
+                            <option  key={bank.id} value={bank.id}>{bank.bank_name}</option>
+                        )
+                    })}
+                </select>
                 </label>
+                </div>
                 <br/>
-                <label>
-                    Amount
-                    <input
-                        type="number"
-                        name="amount"
-                        value={billData.amount}
-                        onChange={handleChange}
-                        required
-                     />
+                <div>
+                <label id={styles.amountLabel} className={styles.formInputLabel}>
+                    <div  id={styles.amountTag} className={styles.formTag}>
+                        Amount
+                    </div>
+                <input
+                id={styles.billAmount}
+                className={styles.formInput}
+                type="number"
+                name="amount"
+                value={billData.amount}
+                onChange={handleChange}
+                required
+                />
                 </label>
+                </div>
                 <br/>
-                <button type="submit">Update</button>
+                <div className={styles.buttonContainer}>
+                <button id={styles.submitButton} className="good-button" type='submit'>Update</button>
+                <button id={styles.cancelButton} className="bad-button" type='button' onClick={submitCallback}>Cancel</button>
+                </div>
             </form>
-            <button type="button" onClick={submitCallback}>Cancel</button>
-        </>
+            {errorMessage?(<div>{errorMessage}</div>):(<></>)}
+        </div>
     )
 }
 

@@ -1,12 +1,14 @@
 import scrooge from '../assets/scrooge.jpg'
+import styles from '../styles/Home.module.css'
+
 
 function Home() {
 
 
     return(
         <>
-            <div className='inner-shadow-box'>
-                <img id='home-image'src={scrooge} />
+            <div className={styles.innerShadowBox}>
+                <img className= {styles.homeImage} src={scrooge} />
             </div>
         </>
     )

@@ -1,0 +1,120 @@
+/* Nav.module.css */
+
+
+.form-input-label, .form-dropdown-label {
+    display: flex;
+    background:  #a5cc52 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 5px 0 0 5px;
+    font-size: 17px;
+    background: linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
+    height: 30px;
+    width: 100%;
+    
+}
+.form-input {
+    border: none;
+    padding-left:10px;
+    width: 70%;
+    font-size: 15px;
+}
+
+.form-input:focus {
+    outline: none;
+}
+
+
+
+.form-tag {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    width: min-content;
+    width: 30%;
+    color: white;
+    text-shadow: 0px 0px 10px #0b6d08;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 100px;
+    background:  #e2f7bb;
+    padding: 2vw;
+    margin-top: 5px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    width: 40vw;
+    height: auto;
+}
+
+.form-drop-down {
+    width: 600px
+}
+
+#create-form-container {
+    max-width: 70%;
+    justify-self: self-end;
+}
+
+#banks-form-container{
+    display: flex;
+    flex-direction: row; 
+}
+
+#banks-form-input {
+width: 30%;
+margin-right: 10px;
+}
+#banks-form-tag {
+padding-left: 5px;
+width: 100%
+}
+#banks-form-label{
+    width: 20%
+}
+
+#submit-button, #cancel-button {
+    width: 8vw;
+    height: 3vh;
+    align-content: center;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 17px
+}
+
+#bill-amount{
+    width: 55%;
+}
+
+#amount-label {
+    width: 50%
+}
+
+#amount-tag {
+    padding-left: 5px;
+}
+
+#selected-bank {
+    width: 80%;
+}
+
+#bank-label {
+    width: 50%
+}
+
+#bank-tag {
+    width: 30%
+}
+
+select:focus {
+    outline: none;
+}

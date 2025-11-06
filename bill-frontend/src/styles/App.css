@@ -1,0 +1,70 @@
+.outer-wrapper {
+    display:flex;
+    padding:50px;
+    padding-top: 100px;
+    justify-content: center;
+
+}
+
+.main-container {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9fbbeec;
+    border-radius: .25rem;
+    padding: 50px;
+    width: min-content;
+    height: 50vh;
+    max-width: 1200px;
+    box-shadow: 0px 0px 25px 5px rgb(0 0 0 / 20%);
+}
+
+.good-button {
+    background: linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
+    border: none;
+    color: white;
+    padding: 0 5px;
+    text-shadow: 0px 0px 10px rgba(106, 168, 70, 0.644); 
+}
+
+.good-button:hover {
+	background:linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
+	background-color:#a5cc52;
+}
+
+.good-button:active {
+	background: linear-gradient(0deg, #b5e64d ,#89ad35 50%, #b8e356);
+}
+
+.bad-button {
+	background:linear-gradient(to bottom, #d83d32 5%, #c62d1f 100%);
+	background-color:#f24537;
+    color: white;
+    border: none;
+    text-shadow: 0px 0px 10px rgba(80, 20, 12, 0.966)
+}
+.bad-button:hover {
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+	background-color:#c62d1f;
+}
+
+.bad-button:active {
+	background: linear-gradient(0deg,   #f24537 5%, #c62d1f 50%, #d83d32 100%);
+}
+
+
+.caution-button {
+  background: linear-gradient(to bottom, #ffe36e 5%, #f2c23e 100%);
+  border: none;
+  color: white;
+  padding: 0 5px;
+  text-shadow: 0 0 10px rgba(109, 87, 9, 0.904); /* warm yellow glow */
+}
+
+.caution-button:hover {
+  background: linear-gradient(to bottom, #f2c23e 5%, #ffe36e 100%);
+}
+
+.caution-button:active {
+  background: linear-gradient(0deg, #fff07a, #e8c23a 50%, #ffe36e);
+}

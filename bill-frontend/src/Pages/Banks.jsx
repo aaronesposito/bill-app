@@ -2,6 +2,9 @@ import {useState, useEffect} from 'react'
 import ReactModal from 'react-modal'
 import { useGetAllBankQuery, useCreateBankMutation, useDeleteBankMutation } from '../app/BankSlice'
 import { useGetAllBillQuery } from '../app/BillSlice'
+import modal from '../styles/Bills.module.css'
+import styles from '../styles/Banks.module.css'
+import form from '../styles/Form.module.css'
 
 
 function Banks(){
@@ -94,63 +97,76 @@ function Banks(){
     }
 
     return (
-        <>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Available Banks</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {banks.data.map((bank)=>{
-                        return(
-                            <tr key={bank.id}>
-                                <td>{bank.bank_name}</td>
-                                <td>
-                                    <button 
-                                    value={bank.id}
-                                    data-bank-name={bank.bank_name} 
-                                    type='button'
-                                    onClick={handleModalOpen}
-                                    >X</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    New Bank Name: 
-                    <input 
+    <>
+    <div className={styles.banksContainer}>
+            <form id={form.banksFormContainer} onSubmit={handleSubmit}>
+                <label id={form.banksFormLabel}className={form.formInputLabel}>
+                    <div id={form.banksFormTag} className={form.formTag}>
+                    New Bank: 
+                    </div>
+                </label>
+                    <input
+                        id={form.banksFormInput}
+                        className={form.input}
                         type='text' 
                         name='bank_name'
                         value={bankData.bank_name}
                         onChange={handleChange}
                         required
                     />
-                </label>
-                <button type='submit'>Add Bank</button>
+
+                <button type='submit' className='good-button'>Add Bank</button>
             </form>
+        <div className={styles.bankListWithHeader}>
+        <div style={{fontSize:25 + 'px', paddingBottom:15 + 'px'}}>Available Banks:</div>
+        <div className={styles.bankList}>
+            {banks.data.map((bank)=>{
+                return(
+                    <div key={bank.id}>
+                        <div className={styles.bankRow}>
+                                <div className={styles.deleteButtonContainer}>
+                                    <button 
+                                    id={styles.deleteButton}
+                                    className="bad-button"
+                                    value={bank.id}
+                                    data-bank-name={bank.bank_name} 
+                                    type='button'
+                                    onClick={handleModalOpen}
+                                    >X</button>
+                                </div>
+                            <div style={{paddingRight:10 + 'px'}}>{bank.bank_name}</div>
+                        </div>
+                    </div>
+                    )
+                })}
+            </div>
+        </div>
+
+    </div>
             <ReactModal 
                 isOpen={modalOpen}
                 preventScroll={true}
                 shouldCloseOnEsc={false}
                 shouldCloseOnOverlayClick={false}
                 ariaHideApp={false}
-                contentLabel="Delete Confirmation"
+                contentLabel="Delete Confirmation" 
+                overlayClassName={modal.modalOverlay}
+                className={modal.modalStyle}
             >
                 {!hasBills?(
                     <>
-                    <p>Are you sure?</p>
-                    <button value={true} type='button' onClick={handleConfirmation}>CONFIRM</button>
-                    <button type='button' onClick={()=>setModalOpen(false)}>CANCEL</button>
+                    <p >Are you sure?</p>
+                    <div className={modal.modalButtons}>
+                        <button id={modal.confirm} value={true} className='good-button' type='button' onClick={handleConfirmation}>CONFIRM</button>
+                        <button id={modal.cancel} className='bad-button' type='button' onClick={()=>setModalOpen(false)}>CANCEL</button>
+                    </div>
                     </>
                 ):(
                     <>
-                    <p>Cannot delete a bank that has associated bills</p>
-                    <button type='button' onClick={handleModalClose}>CANCEL</button>
+                    <p id={modal.text}>Cannot delete a bank that has associated bills</p>
+                    <div className={modal.modalButtons}>
+                    <button id={modal.cancel} className='bad-button' type='button' onClick={handleModalClose}>CANCEL</button>
+                    </div>
                     </>
                 )}
                 
