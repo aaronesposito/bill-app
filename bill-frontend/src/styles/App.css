@@ -68,3 +68,39 @@
 .caution-button:active {
   background: linear-gradient(0deg, #fff07a, #e8c23a 50%, #ffe36e);
 }
+
+.success-container {
+  height: 50vh;
+  width: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-text {
+  font-size: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield; /* Standard property for other browsers */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* Sets a large white box shadow to cover the background */
+  -webkit-text-fill-color: #000000 !important; /* Sets the text color (adjust as needed) */
+}

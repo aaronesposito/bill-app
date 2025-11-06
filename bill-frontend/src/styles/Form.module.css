@@ -60,7 +60,8 @@
 }
 
 #create-form-container {
-    max-width: 70%;
+    max-width: 400px;
+    padding: 20px;
     justify-self: self-end;
 }
 
@@ -82,10 +83,8 @@ width: 100%
 }
 
 #submit-button, #cancel-button {
-    width: 8vw;
-    height: 3vh;
+    padding: 20px;
     align-content: center;
-    margin-top: 10px;
     border-radius: 5px;
     border: none;
     font-size: 17px

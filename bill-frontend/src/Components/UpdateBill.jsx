@@ -49,7 +49,7 @@ function UpdateBill({submitCallback, billID}){
     }
 
     return(
-        <div className={styles.formContainer}>
+        <div id={styles.createFormContainer} className={styles.formContainer}>
             <form onSubmit={handleSubmit}>
                 <div>
                 <label className={styles.formInputLabel}>

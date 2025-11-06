@@ -123,13 +123,16 @@ function SignUp(){
                     required
                 />
             </label>
+                    {errorMessage?(<div>{errorMessage}</div>):(<></>)}
             <br/>
             <div className={styles.buttonContainer}>
                 <button id={styles.submitButton} className="good-button" type='submit'>Submit</button>
                 <button id={styles.cancelButton} className="bad-button" type='button' onClick={handleCancel}>Cancel</button>
             </div>
+
+
         </form>
-        {errorMessage?(<div>{errorMessage}</div>):(<></>)}
+ 
         </>
     )
 }
