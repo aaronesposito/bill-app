@@ -1,7 +1,7 @@
 services:
   bill-api:
     build: ./bill-api
-    image: aarooon16045/bill-api:lts
+    image: aarooon16045/bill-api
     ports: 
       - "5040:5040"
     restart: on-failure
