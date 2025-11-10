@@ -1,20 +1,15 @@
-# Use an official Python runtime
-FROM python:3.11
+FROM python:3.12-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+WORKDIR /srv/bill-api
 
-# Copy the current directory contents into the container
-COPY bill-api/ .
-
-# Install dependencies globally (no venv)
+# Install deps first (optional optimization)
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port Flask will run on
+# Copy the rest of the app
+COPY . .
+
+# Expose port if you like (informational)
 EXPOSE 5040
 
-# Start the application using Waitress (production) or Flask (development)
 CMD ["python", "app.py"]
-
-# Uncomment for development mode
-# CMD ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
