@@ -82,14 +82,13 @@ def delete(id):
 def get_me():
     user_id = session.get("user_id")
     if not user_id:
-        return jsonify({"loggedIn": False}), 200  # or 200 with logged_in False
+        return jsonify({"loggedIn": False}), 200  
 
     internal_id = get_id(user_id)
     user = get_user(internal_id)
     if not user:
         return jsonify({"loggedIn": False}), 200
 
-    # don't send sensitive stuff (password hash, etc.)
     return jsonify({
         "loggedIn": True,
         "user": user["username"]

@@ -13,9 +13,7 @@ def login_required(fn):
         return fn(*args, **kwargs)
     return wrapper
 
-# Standardized response format
 def success_response(data=None, message="Success", status_code=200):
-    """Create a standardized success response."""
     response = {
         "success": True,
         "message": message
@@ -26,7 +24,6 @@ def success_response(data=None, message="Success", status_code=200):
 
 
 def error_response(message="An error occurred", status_code=400):
-    """Create a standardized error response."""
     return jsonify({
         "success": False,
         "error": message
@@ -35,7 +32,6 @@ def error_response(message="An error occurred", status_code=400):
 
 def current_user():
     uid = session.get("user_id")
-    # Look up in DB in real code
     return {"id": uid} if uid else None
 
 

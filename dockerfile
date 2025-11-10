@@ -11,16 +11,10 @@ COPY bill-api/ .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port Flask will run on
-EXPOSE 5011
-
-# Set Flask environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_ENV=dev
-ENV PYTHONUNBUFFERED=1
+EXPOSE 5040
 
 # Start the application using Waitress (production) or Flask (development)
-# CMD ["waitress-serve", "--host=0.0.0.0", "--port=5001", "app:app"]
+CMD ["waitress-serve", "--host=0.0.0.0", "--port=5040", "app:app"]
 
 # Uncomment for development mode
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8081", "--debug"]
+# CMD ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]

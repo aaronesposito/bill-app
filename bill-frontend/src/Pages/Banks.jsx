@@ -110,7 +110,7 @@ function Banks(){
                         className={form.input}
                         type='text' 
                         name='bank_name'
-                        value={bankData.bank_name}
+                        value={bankData}
                         onChange={handleChange}
                         required
                     />

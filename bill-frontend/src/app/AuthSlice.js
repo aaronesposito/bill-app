@@ -6,7 +6,7 @@ export const AuthApi = createApi({
     tagTypes: ['Auth'],
     baseQuery: fetchBaseQuery({
         credentials: 'include',
-        baseUrl: 'http://localhost:8081',
+        baseUrl: 'http://localhost:5040',
     }),
     endpoints: (builder) => ({
         signup: builder.mutation({

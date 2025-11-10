@@ -5,7 +5,9 @@ from flask_cors import CORS
 from utilities.db_handler import DB_init
 from routes import auth, banks, bills
 from utilities.util import current_user
+from waitress import serve
 import os
+
 
 app = Flask(__name__)
 CORS(
@@ -37,7 +39,7 @@ def load_user():
     g.user = current_user()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(app, host="0.0.0.0", port=5040)
 
 
 

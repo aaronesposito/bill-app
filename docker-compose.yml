@@ -3,12 +3,13 @@ services:
     build: ./bill-api
     image: aarooon16045/bill-api:lts
     ports: 
-      - "8081:8081"
+      - "5040:5040"
     restart: on-failure
     volumes:
       - ./bill-api:/srv/bill-api
     working_dir: /srv/bill-api
-    command: ["flask", "run", "--host=0.0.0.0", "--port=8081", "--debug"]
+    # command: ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
+    command: ["waitress-serve", "--host=0.0.0.0", "--port=5040", "app:app"]
     env_file:
       - .env
     networks:
@@ -17,17 +18,10 @@ services:
   bill-frontend:
     image: node:lts-bullseye
     working_dir: /app
-    command: bash -c "npm install && npm run dev -- --host 0.0.0.0 --port 5004"
+    command: bash -c "npm install && npm run build && npm run preview"
     volumes:
       - ./bill-frontend:/app:rw
-      # keep node_modules inside the container so the bind mount doesn't shadow it
-      - /app/node_modules
     environment:
-      # ensure Vite/chokidar polls for changes across the bind mount
-      CHOKIDAR_USEPOLLING: "true"
-      # optional but often helps on Docker Desktop
-      WATCHPACK_POLLING: "true"
-      # your existing var
       VITE_API_HOST: ${REACT_APP_API_HOST}
     ports:
       - "5004:5004"
