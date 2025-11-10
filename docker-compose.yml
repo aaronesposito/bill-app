@@ -7,7 +7,7 @@ services:
     restart: on-failure
     working_dir: /srv/bill-api
     # command: ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
-    command: ["python", "app.py"]
+    command: ["waitress-serve", "--listen=0.0.0.0:5040", "src.app:app"]
     env_file:
       - .env
     networks:

@@ -5,7 +5,6 @@ from flask_cors import CORS
 from utilities.db_handler import DB_init
 from routes import auth, banks, bills
 from utilities.util import current_user
-from waitress import serve
 import os
 
 
@@ -38,8 +37,6 @@ app.register_blueprint(bills.bp)
 def load_user():
     g.user = current_user()
 
-if __name__ == "__main__":
-    serve(app, host="0.0.0.0", port=5040)
 
 
 
