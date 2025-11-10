@@ -77,6 +77,7 @@ function AllBills() {
     }
 
     const showBillUpdate = (e) => {
+            setCreateBill(false)
             setUpdateBill(true)
             setBillUpdateTarget(e.target.value)
     }

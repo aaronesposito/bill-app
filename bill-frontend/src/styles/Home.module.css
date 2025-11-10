@@ -13,8 +13,8 @@
     position: relative;
     border-radius: .35rem;
     overflow: hidden;      
-    width: 30vw;
-    height: 30vw;
+    width: 30vh;
+    height: 30vh;
     width: fit-content;
 }
 
