@@ -5,7 +5,7 @@ export const BillApi = createApi({
     reducerPath: "BillApi",
     baseQuery: fetchBaseQuery({
         credentials: 'include',
-        baseUrl: 'http://localhost:5040'
+        baseUrl: 'http://prometheus:5040'
     }),
     endpoints: (builder) => ({
         getAllBill: builder.query({

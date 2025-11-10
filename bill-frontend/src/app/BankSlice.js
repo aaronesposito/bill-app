@@ -5,7 +5,7 @@ export const BankApi = createApi({
     reducerPath: "BankApi",
     baseQuery: fetchBaseQuery({
         credentials: 'include',
-        baseUrl: 'http://localhost:5040'
+        baseUrl: 'http://prometheus:5040'
     }),
     endpoints: (builder) => ({
         getAllBank: builder.query({

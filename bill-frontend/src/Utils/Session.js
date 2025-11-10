@@ -2,7 +2,7 @@
 
 
 export default async function checkSession() {
-  const res = await fetch('http://localhost:5040/auth/me', {
+  const res = await fetch('http://prometheus:5040/auth/me', {
     method: 'GET',
     credentials: 'include', // <-- CRITICAL
   });

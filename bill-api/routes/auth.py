@@ -31,7 +31,7 @@ def register():
 
 @bp.route("/login", methods=["OPTIONS", "POST"])
 @cross_origin(
-    origins="http://localhost:5004",
+    origins="http://prometheus:5004",
     supports_credentials=True,
 )
 def login():
