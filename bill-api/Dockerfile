@@ -12,4 +12,4 @@ COPY . .
 # Expose port if you like (informational)
 EXPOSE 5040
 
-CMD ["waitress-serve", "--listen=0.0.0.0:5040", "src.app:app"]
+CMD ["waitress-serve", "--listen=0.0.0.0:5040", "app:app"]
