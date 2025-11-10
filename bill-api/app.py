@@ -9,12 +9,18 @@ import os
 
 
 app = Flask(__name__)
+
+allowed_origins = [
+        "http://localhost:5004",          # still handy for local dev
+        "http://127.0.0.1:5004",
+        "http://prometheus:5004"
+]
 CORS(
     app,
     supports_credentials=True,
     resources={
         r"/*": {
-            "origins": "http://localhost:5004"
+            "origins": allowed_origins
         }
     }
 )
