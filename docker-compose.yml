@@ -9,7 +9,7 @@ services:
       - ./bill-api:/srv/bill-api
     working_dir: /srv/bill-api
     # command: ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
-    command: ["waitress-serve", "--host=0.0.0.0", "--port=5040", "app:app"]
+    command: ["python", "app.py"]
     env_file:
       - .env
     networks:

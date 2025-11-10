@@ -3,13 +3,16 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerkey')
-        FLASK_APP_NAME = "aarooon16045/bill-app"
-        FLASK_CONTAINER_NAME = "bill-app"
+        FLASK_APP_NAME = "aarooon16045/bill-api"
+        FLASK_CONTAINER_NAME = "bill-api"
         DB_USER = credentials('DB_USER')
         DB_PASSWORD = credentials('DB_PASSWORD')
         DB_HOST = credentials('DB_HOST')
         DB_PORT = credentials('DB_PORT')
         DB_NAME = credentials('DB_NAME')
+        HASH_KEY = credentials('HASH_KEY')
+        SECRET_KEY = credentials('SECRET_KEY')
+        REACT_APP_API_HOST = credentials('REACT_HOST')
 	    IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
@@ -27,11 +30,12 @@ pipeline {
                     sh """
                     echo "DB_USER=${DB_USER}" > .env
                     echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
-                    echo "DB_ADMIN_EMAIL=${DB_ADMIN_EMAIL}" >> .env
-                    echo "DB_ADMIN_PASSWORD=${DB_ADMIN_PASSWORD}" >> .env
                     echo "DB_HOST=${DB_HOST}" >> .env
                     echo "DB_PORT=${DB_PORT}" >> .env
                     echo "DB_NAME=${DB_NAME}" >> .env
+                    echo "HASH_KEY=${HASH_KEY}" >> .env
+                    echo "REACT_APP_API_HOST=${REACT_APP_API_HOST}" >> .env
+                    echo "SECRET_KEY=${SECRET_KEY}" >> .env
                     """
                 }
             }
@@ -40,7 +44,7 @@ pipeline {
             steps {  
                 sh """
                 export IMAGE_TAG=${BUILD_NUMBER}
-                docker-compose build flask-app
+                docker-compose build ${FLASK_CONTAINER_NAME}
                 """
             }
         }

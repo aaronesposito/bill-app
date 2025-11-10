@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5040
 
 # Start the application using Waitress (production) or Flask (development)
-CMD ["waitress-serve", "--host=0.0.0.0", "--port=5040", "app:app"]
+CMD ["python", "app.py"]
 
 # Uncomment for development mode
 # CMD ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
