@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 
 allowed_origins = [
-        "http://localhost:5004",          # still handy for local dev
+        "http://localhost:5004",
         "http://127.0.0.1:5004",
         "http://prometheus:5004"
 ]

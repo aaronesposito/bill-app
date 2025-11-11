@@ -3,7 +3,7 @@ services:
     build: ./bill-api
     image: aarooon16045/bill-api:latest
     ports: 
-      - "5040:5040"
+      - "5005:5040"
     restart: on-failure
     working_dir: /srv/bill-api
     # command: ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]

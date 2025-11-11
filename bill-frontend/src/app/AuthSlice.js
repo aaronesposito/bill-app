@@ -6,7 +6,7 @@ export const AuthApi = createApi({
     tagTypes: ['Auth'],
     baseQuery: fetchBaseQuery({
         credentials: 'include',
-        baseUrl: 'http://prometheus:5040',
+        baseUrl: 'http://prometheus:5005',
     }),
     endpoints: (builder) => ({
         signup: builder.mutation({
