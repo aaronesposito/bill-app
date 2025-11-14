@@ -82,50 +82,25 @@ function AllBills() {
             setBillUpdateTarget(e.target.value)
     }
 
-    const headers = ["header", "bill_name", "bank_name", "amount", "paid", "Toggle", "Update", "Delete"]
-
     const renderCell = () => {
         const sorted = [...(filteredBills ?? [])].sort(compareBy(sort));
-           let cols = headers.map((header) => {
-                    let col
-                    if (header !== 'header') {
-                        col = [<div key={header} className={styles.header}>{header}</div>]
-                    } else {
-                        col = []
-                    }
-                    col.push(sorted.map((bill) => {
-                        let row = ''
-                        switch (header) {
-                            case "Toggle":
-                                row =  <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
-                                break
-                            case "Update":
-                               
-                                row = <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
-                                
-                                break
-                            case "Delete":
-                                row = <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
-                                break
-                            case "paid":
-                                row = <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
-                                break
-                            case "header":
-                                break
-                            case "amount":
-                                row = <div className={styles.row}>${(bill?.[header].toFixed(2)) ?? ""}</div>
-                                break
-                            default:
-                                row = <div className={styles.row}>{bill?.[header] ?? ""}</div>
-                                break
-                            }
-                        return row
-                    }))
-                return col.reverse()
-                })
-                cols.splice(0,1)
-            return cols
-        }
+           let table = []
+                sorted.map((bill) => {
+                        table.push(
+                            <div className={styles.tableDataRow}>
+                                <div className={styles.row}>{bill?.bill_name ?? ""}</div>
+                                <div className={styles.row}>{bill?.bank_name ?? ""}</div>
+                                <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
+                                <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
+                                <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
+                                <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
+                                <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
+                            </div>
+                            )
+                        }
+                    )
+        return table
+    }
                     
 
                 
@@ -269,16 +244,20 @@ function AllBills() {
                 <div className={styles.controller}>
                     <div>
                     <div className={styles.tableContainer}>
-                        {renderCell().map((cols)=>{
-                            return(
-                                <div  className={styles.column}>
-                                {cols.reverse().map((col)=>{
-                                    return col ? (col):(<></>)
-                                    })}
-                                </div>
-                            )
-                        })}
-
+                        <div className={styles.headerRow}>
+                            <div className={styles.header}>Bill</div>
+                            <div className={styles.header}>Bank</div>
+                            <div className={styles.header}>Amount</div>
+                            <div className={styles.header}>Paid</div>
+                            <div className={styles.header}>Toggle</div>
+                            <div className={styles.header}>Update</div>
+                            <div className={styles.header}>Delete</div>
+                        </div>
+                        <div className={styles.tableBody}>
+                            {renderCell().map((row)=>{
+                                    return row
+                                })}
+                        </div>
                     </div>
                     <div className={styles.dataFormContainer}>
                         <div className={styles.subdata}>

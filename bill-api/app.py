@@ -18,11 +18,7 @@ allowed_origins = [
 CORS(
     app,
     supports_credentials=True,
-    resources={
-        r"/*": {
-            "origins": allowed_origins
-        }
-    }
+    origins=allowed_origins
 )
 DB_init()
 load_dotenv()

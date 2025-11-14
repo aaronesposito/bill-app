@@ -7,6 +7,12 @@ from queries.auth import check_duplicate_user, create_user, delete_user, validat
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+allowed_origins = [
+        "http://localhost:5004",
+        "http://127.0.0.1:5004",
+        "http://prometheus:5004"
+]
+
 @bp.post("/signup")
 def register(): 
     try:
@@ -30,10 +36,7 @@ def register():
         return error_response(str(e), 400)
 
 @bp.route("/login", methods=["OPTIONS", "POST"])
-@cross_origin(
-    origins="http://prometheus:5004",
-    supports_credentials=True,
-)
+@cross_origin(origins=allowed_origins, supports_credentials=True)
 def login():
     data = request.get_json()
     response = validate_account(data["username"])

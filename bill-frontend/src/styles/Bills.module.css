@@ -4,11 +4,13 @@
 
 .table-container {
     display:flex;
+    flex-direction: column;
     justify-content: space-evenly;
     background-color: white;
     border: 2px solid rgba(0, 0, 0, 0.219);
     border-radius: 10px; 
     overflow: hidden;
+    max-height: 30vh;
     position: relative;
     margin-top: 5px;
     margin-bottom: 15px
@@ -21,6 +23,9 @@
 }
 
 .header {
+    display: grid;
+    justify-content: center;
+    align-items: center;
     font-size: x-large;
     box-sizing: border-box;
     font-weight: 500;
@@ -29,22 +34,24 @@
     padding: 10px
 }
 
-.row {
+.table-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.header-row, .table-data-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(100px, 1fr));
+    height: fit-content;
+}
+
+.row, .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
     justify-content: center;
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, 0.062);
-    height: 30px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.062);
-    height: 30px;
-    padding: 5px;
 }
 
 .table-controller {
