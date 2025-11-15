@@ -5,6 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerkey')
         FLASK_APP_NAME = "aarooon16045/bill-api"
         FLASK_CONTAINER_NAME = "bill-api"
+        REACT_CONTAINER_NAME = "bill-frontend"
         DB_USER = credentials('DB_USER')
         DB_PASSWORD = credentials('DB_PASSWORD')
         DB_HOST = credentials('DB_HOST')
@@ -36,6 +37,7 @@ pipeline {
                     echo "HASH_KEY=${HASH_KEY}" >> .env
                     echo "REACT_APP_API_HOST=${REACT_APP_API_HOST}" >> .env
                     echo "SECRET_KEY=${SECRET_KEY}" >> .env
+                    echo "REACT_CONTAINER_NAME=${REACT_CONTAINER_NAME}" >> .env
                     """
                 }
             }
@@ -45,6 +47,7 @@ pipeline {
                 sh """
                 export IMAGE_TAG=${BUILD_NUMBER}
                 docker-compose build ${FLASK_CONTAINER_NAME}
+                docker-compose build --no-cache ${REACT_CONTAINER_NAME}
                 """
             }
         }
@@ -70,7 +73,7 @@ pipeline {
                     sh """
                     docker-compose down
                     docker pull ${FLASK_APP_NAME}:${BUILD_NUMBER}
-                    docker-compose up -d
+                    docker-compose -p "bill-app" up -d
                     """
                 }
             }
