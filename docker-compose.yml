@@ -6,27 +6,17 @@ services:
       - "5005:5040"
     restart: on-failure
     working_dir: /srv/bill-api
-    # command: ["flask", "run", "--host=0.0.0.0", "--port=5040", "--debug"]
-    command: ["waitress-serve", "--listen=0.0.0.0:5040", "app:app"]
     env_file:
-      - .env
+      - .env.${ENV}
     networks:
       - database-network
 
   bill-frontend:
-    # Use your multi-stage Dockerfile (Node builder + Nginx)
-    build:
-      context: ./bill-frontend     # folder where that Dockerfile lives
-      # If you want to pass build-time vars into Vite:
-      args:
-        VITE_API_HOST: ${REACT_APP_API_HOST}
-    image: aarooon16045/bill-frontend:latest
+    image: aarooon16045/app-frontend:${TAG:-latest}
     ports:
       - "5004:5004"                # matches EXPOSE 5004 and nginx.conf
     env_file:
-      - .env                       # only needed if nginx.conf or app uses envs at runtime
-    depends_on:
-      - bill-api
+      - .env.${ENV}
 
 
 networks:

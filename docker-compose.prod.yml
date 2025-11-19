@@ -1,0 +1,21 @@
+services:
+  bill-api:
+    command: ["waitress-serve", "--listen=0.0.0.0:5040", "app:app"]
+
+
+  bill-frontend:
+    build:
+      context: ./bill-frontendfrontend
+      target: prod         # <— prod stage
+    image: aarooon16045/bill-frontend:latest
+    ports:
+      - "5004:80"
+    environment:
+      # only if you template config at runtime
+      VITE_API_BASE_URL: "http://prometheus:5005"
+
+
+
+networks:
+  database-network:
+    external: true
