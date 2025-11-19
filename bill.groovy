@@ -16,11 +16,19 @@ pipeline {
         REACT_APP_API_HOST = credentials('REACT_HOST')
 	    IMAGE_TAG = "${BUILD_NUMBER}"
     }
+    
+    parameters {
+        choice(
+          name: 'ENV',
+          choices: ['dev', 'prod'],
+          description: 'Which environment to deploy?'
+        )
+      }
 
     stages { 
         stage('SCM Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'environment-builds',
                     credentialsId: 'git-key',
                     url: 'git@github.com:aaronesposito/bill-app.git'
             }
@@ -71,9 +79,11 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker-compose down
-                    docker pull ${FLASK_APP_NAME}:${BUILD_NUMBER}
-                    docker-compose -p "bill-app" up -d
+                        ENV=${ENV} \
+                        docker-compose -f docker-compose.yml \
+                        -f docker-compose.${ENV}.yml \
+                        -p bill-app-${ENV} \
+                        up -d --build
                     """
                 }
             }
