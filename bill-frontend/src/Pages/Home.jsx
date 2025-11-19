@@ -1,6 +1,6 @@
 import scrooge from '../assets/scrooge.jpg'
 import styles from '../styles/Home.module.css'
-import { API_BASE_URL } from './Config/apiConfig.js';
+import { API_BASE_URL } from '../Config/apiConfig/';
 
 
 
