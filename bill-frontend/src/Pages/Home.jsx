@@ -2,8 +2,8 @@ import scrooge from '../assets/scrooge.jpg'
 import styles from '../styles/Home.module.css'
 
 
-function Home() {
 
+function Home() {
 
     return(
         <>

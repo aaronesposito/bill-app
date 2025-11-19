@@ -1,8 +1,8 @@
-
+import { API_BASE_URL } from '../Config/apiConfig'
 
 
 export default async function checkSession() {
-  const res = await fetch('http://prometheus:5005/auth/me', {
+  const res = await fetch(`${API_BASE_URL}:5005/auth/me`, {
     method: 'GET',
     credentials: 'include', // <-- CRITICAL
   });

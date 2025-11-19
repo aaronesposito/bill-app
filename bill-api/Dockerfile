@@ -12,4 +12,7 @@ COPY . .
 # Expose port if you like (informational)
 EXPOSE 5040
 
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_ENV=production
+
 CMD ["waitress-serve", "--listen=0.0.0.0:5040", "app:app"]

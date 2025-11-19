@@ -1,11 +1,11 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-
+import { API_BASE_URL } from '../Config/apiConfig'
 
 export const BillApi = createApi({
     reducerPath: "BillApi",
     baseQuery: fetchBaseQuery({
         credentials: 'include',
-        baseUrl: 'http://prometheus:5005'
+        baseUrl: API_BASE_URL
     }),
     endpoints: (builder) => ({
         getAllBill: builder.query({
