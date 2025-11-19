@@ -21,5 +21,5 @@ FROM nginx:alpine AS prod
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist ./
 # If you need custom nginx.conf, copy it too
-EXPOSE 5004
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
