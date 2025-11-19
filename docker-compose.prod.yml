@@ -5,7 +5,7 @@ services:
 
   bill-frontend:
     build:
-      context: ./bill-fronten
+      context: ./bill-frontend
       target: prod         # <— prod stage
     image: aarooon16045/bill-frontend:latest
     ports:
