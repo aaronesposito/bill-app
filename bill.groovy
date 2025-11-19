@@ -79,6 +79,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                        echo "Using VITE_API_BASE_URL=$VITE_API_BASE_URL"
                         ENV=${ENV} \
                         docker-compose -f docker-compose.yml \
                         -f docker-compose.${ENV}.yml \
