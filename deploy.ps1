@@ -10,7 +10,7 @@ if ($Environment -eq "dev") {
     $env:VITE_API_BASE_URL = "http://localhost:5005"
 }
 else {
-    $env:VITE_API_BASE_URL = "http://prometheus:5040"
+    $env:VITE_API_BASE_URL = "http://prometheus:5005"
 }
 
 $composeFiles = @(
