@@ -13,6 +13,7 @@ pipeline {
         DB_NAME = credentials('DB_NAME')
         HASH_KEY = credentials('HASH_KEY')
         SECRET_KEY = credentials('SECRET_KEY')
+        VITE_API_BASE_URL = credentials('VITE_API_BASE_URL')
         REACT_APP_API_HOST = credentials('REACT_HOST')
 	    IMAGE_TAG = "${BUILD_NUMBER}"
     }
@@ -28,7 +29,7 @@ pipeline {
     stages { 
         stage('SCM Checkout') {
             steps {
-                git branch: 'environment-builds',
+                git branch: 'main',
                     credentialsId: 'git-key',
                     url: 'git@github.com:aaronesposito/bill-app.git'
             }
@@ -46,6 +47,7 @@ pipeline {
                     echo "REACT_APP_API_HOST=${REACT_APP_API_HOST}" >> .env
                     echo "SECRET_KEY=${SECRET_KEY}" >> .env
                     echo "REACT_CONTAINER_NAME=${REACT_CONTAINER_NAME}" >> .env
+                    echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" >> .env
                     """
                 }
             }
@@ -78,14 +80,15 @@ pipeline {
         stage('Deploy to Server') {
             steps {
                 script {
-                    sh """
-                        echo "Using VITE_API_BASE_URL=$VITE_API_BASE_URL"
-                        ENV=${ENV} \
-                        docker-compose -f docker-compose.yml \
-                        -f docker-compose.${ENV}.yml \
-                        -p bill-app-${ENV} \
+                    sh '''
+                      echo "Using VITE_API_BASE_URL=$VITE_API_BASE_URL"
+            
+                      docker-compose \
+                        -f docker-compose.yml \
+                        -f docker-compose.prod.yml \
+                        -p bill-app-prod \
                         up -d --build
-                    """
+                    '''
                 }
             }
         }
