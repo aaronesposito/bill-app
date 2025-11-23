@@ -11,6 +11,8 @@ services:
       build:
         context: ./bill-frontend
         target: dev
+      ports:
+        - "5004:5004"
       image: aarooon16045/bill-frontend:dev
       volumes:
         - ./bill-frontend:/app
