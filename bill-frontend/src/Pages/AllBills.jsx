@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { useGetAllBillQuery, useDeleteBillMutation, useUpdateBillMutation } from '../app/BillSlice'
 import { useGetAllBankQuery } from '../app/BankSlice'
@@ -25,7 +26,7 @@ function AllBills() {
     const [updateBill, setUpdateBill] = useState(false)
     const [billUpdateTarget, setBillUpdateTarget] = useState(0)
     const [errorMEssage, setErrorMessage] = useState('')
-
+    const navigate = useNavigate()
     const billTotal = (billArr)=> {
         const total = (billArr?? [] ).reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
         setBillsTotal(total)
@@ -87,7 +88,7 @@ function AllBills() {
            let table = []
                 sorted.map((bill) => {
                         table.push(
-                            <div className={styles.tableDataRow}>
+                            <div value={bill.id} onClick={handleNavigate} className={styles.tableDataRow}>
                                 <div className={styles.row}>{bill?.bill_name ?? ""}</div>
                                 <div className={styles.row}>{bill?.bank_name ?? ""}</div>
                                 <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
@@ -102,12 +103,6 @@ function AllBills() {
         return table
     }
                     
-
-                
-
-
-
-
 
     const compareBy = (key) => (a, b) => {
         const av = a?.[key];
@@ -190,6 +185,11 @@ function AllBills() {
 
     const handleBillsUpdate=async()=>{
         await refetch()
+    }
+
+    const handleNavigate=(e)=>{
+        const id = e.target.value
+        navigate(`/bills/${id}`)
     }
 
     useEffect(()=>{

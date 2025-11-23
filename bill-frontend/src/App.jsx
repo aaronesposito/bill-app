@@ -5,6 +5,7 @@ import AllBills from './Pages/AllBills.jsx'
 import Banks from './Pages/Banks.jsx'
 import SignUp from './Pages/SignUp.jsx'
 import Success from './Pages/Success.jsx'
+import OneBill from './Pages/OneBill.jsx'
 import "./styles/App.css"
 
 
@@ -20,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/bills" element={<AllBills />}/>
+              <Route path="/bills/:id" element={<OneBill />}/>
               <Route path="/banks" element={<Banks />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/success" element={<Success />} />
