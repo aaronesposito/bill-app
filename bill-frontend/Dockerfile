@@ -8,7 +8,7 @@ RUN npm install
 FROM base AS dev
 WORKDIR /app
 COPY . .
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "80"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5004"]
 
 # Build stage
 FROM base AS build

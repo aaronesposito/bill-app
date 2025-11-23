@@ -27,7 +27,14 @@ docker compose `
   -f $composeFiles[0] `
   -f $composeFiles[1] `
   -p $projectName `
-  up -d --build
+  build --no-cache
+
+# Then: bring it up using the freshly built images
+docker compose `
+  -f $composeFiles[0] `
+  -f $composeFiles[1] `
+  -p $projectName `
+  up -d
 
 
 #   .\deploy.ps1 -Environment [dev/prod]

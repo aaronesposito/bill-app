@@ -14,7 +14,7 @@ services:
   bill-frontend:
     image: aarooon16045/app-frontend:${TAG:-latest}
     ports:
-      - "5004:80"                # matches EXPOSE 5004 and nginx.conf
+      - "5004:5004"                # matches EXPOSE 5004 and nginx.conf
     env_file:
       - .env.${ENV}
 
