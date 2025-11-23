@@ -6,9 +6,8 @@
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
-    background-color: white;
+    background-color: var(--terciary-color);
     border: 2px solid rgba(0, 0, 0, 0.219);
-    border-radius: 10px; 
     overflow: hidden;
     max-height: 30vh;
     position: relative;
@@ -29,9 +28,10 @@
     font-size: x-large;
     box-sizing: border-box;
     font-weight: 500;
-    background: linear-gradient(to bottom, #c1f784 5%, #b3e458 100%);
+    background: var(--secondary-color);
     width: 100%;
-    padding: 10px
+    padding: 10px;
+    color: white;
 }
 
 .table-body {
@@ -73,19 +73,17 @@
 
 .total-container {
     display: flex;
-    background-color: white;
+    background-color: var(--terciary-color);
     width: min-content;
     margin-bottom: 15px;
-    border-radius: 5px;
     border: 2px solid rgba(0, 0, 0, 0.377)
 }
 
 .total-label {
     padding: 8px;
-    background: #b3e458;
+    background: var(--secondary-color);
     height: 100%;
     width: 100%;
-    border-radius: 5px 0 0 5px;
     border-right: 1px solid black
 
 }
@@ -95,7 +93,6 @@
     background: #e2f7bb;
     height: 100%;
     width: 100%;
-    border-radius: 0 5px 5px 0;
 }
 
 .subdata-container {
@@ -110,21 +107,18 @@
 }
 
 .small-table-header {
-    background-color: #b3e458;
-    border-radius: 5px 5px 0 0;
+    background-color: var(--secondary-color);
     padding: 4px;
     border: 1px solid black;
 }
 
 .small-table-data {
-    background-color: #e2f7bb;
-    border-radius: 0 0 5px 5px;
+    background-color: var(--terciary-color);
     border: 1px solid black;
 
 }
 
 .small-table-row {
-    border-radius: 5px 5px 0 0;
     display: flex;
     border-bottom: 1px solid black;
 }
@@ -171,7 +165,6 @@
 
 .modal-style {
     background: #d4ebc9;
-    border-radius: 8px;
     top: 30vw;
     left: 40vw;
     right: 40vw;
@@ -216,7 +209,6 @@
     text-wrap: nowrap ;
     width: min-content;
     align-content: center;
-    border-radius: 5px;
     border: none;
     font-size: 16px;
     padding: 5px;

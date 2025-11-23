@@ -10,8 +10,7 @@
     display:flex;
     align-items: center;
     justify-content: center;
-    background-color: #d9fbbeec;
-    border-radius: .25rem;
+    background-color: var(--terciary-color);
     padding: 50px;
     width: min-content;
     height: min-content;
@@ -103,4 +102,11 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* Sets a large white box shadow to cover the background */
   -webkit-text-fill-color: #000000 !important; /* Sets the text color (adjust as needed) */
+}
+
+:root {
+  font-family: "Rubik", sans-serif;
+  --primary-color: #044389;
+  --secondary-color: #a3a5ff;
+  --terciary-color: #d9f0ff;
 }
