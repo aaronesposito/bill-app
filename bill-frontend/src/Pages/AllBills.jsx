@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import ReactModal from 'react-modal'
 import { useGetAllBillQuery, useDeleteBillMutation, useUpdateBillMutation } from '../app/BillSlice'
 import { useGetAllBankQuery } from '../app/BankSlice'
@@ -13,19 +14,13 @@ function AllBills() {
     const [filteredBills, setFilteredBills] = useState([])
     const [filter, setFilter] = useState("all")
     const [sort, setSort] = useState("bill_name")
-    const [deleteBill, deleteBillResponse] = useDeleteBillMutation()
     const [update, updateResponse] = useUpdateBillMutation()
-    const [targetBill, setTargetBill] = useState('')
-    const [confirmation, setConfirmation] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
     const [billsTotal, setBillsTotal] = useState(0)
     const [banksTotal, setBanksTotal] = useState({})
     const [balances, setBalances] = useState({})
     const [createBill, setCreateBill] = useState(false)
     const [updateBill, setUpdateBill] = useState(false)
-    const [billUpdateTarget, setBillUpdateTarget] = useState(0)
     const [errorMEssage, setErrorMessage] = useState('')
-
     const billTotal = (billArr)=> {
         const total = (billArr?? [] ).reduce((sum, b) => sum + (Number(b.amount) || 0), 0);
         setBillsTotal(total)
@@ -76,25 +71,17 @@ function AllBills() {
         setCreateBill(createBill?false:true)
     }
 
-    const showBillUpdate = (e) => {
-            setCreateBill(false)
-            setUpdateBill(true)
-            setBillUpdateTarget(e.target.value)
-    }
-
     const renderCell = () => {
         const sorted = [...(filteredBills ?? [])].sort(compareBy(sort));
            let table = []
                 sorted.map((bill) => {
                         table.push(
                             <div className={styles.tableDataRow}>
-                                <div className={styles.row}>{bill?.bill_name ?? ""}</div>
-                                <div className={styles.row}>{bill?.bank_name ?? ""}</div>
-                                <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
-                                <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
-                                <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
-                                <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
-                                <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
+                            <a href={`/bills/${bill.id}`} className={styles.row}>{bill?.bill_name ?? ""}</a>
+                            <div className={styles.row}>{bill?.bank_name ?? ""}</div>
+                            <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
+                            <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
+                            <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
                             </div>
                             )
                         }
@@ -102,12 +89,6 @@ function AllBills() {
         return table
     }
                     
-
-                
-
-
-
-
 
     const compareBy = (key) => (a, b) => {
         const av = a?.[key];
@@ -151,38 +132,6 @@ function AllBills() {
         setSort(e.target.value)
     }
 
-    const handleDelete=async()=>{
-        if(confirmation){
-            try {
-                const res = await deleteBill(targetBill).unwrap()
-                if (res?.success) {
-                    handleBillsUpdate()
-                    setConfirmation(false)
-                }
-                }catch (err){
-                    setErrorMessage(err?.data?.error ?? 'Login error')
-            }
-        }
-    }
-    
-
-
-    const handleModal=(e)=>{
-        setTargetBill(e.target.value)
-        setModalOpen(true)
-    }
-
-    const handleConfirmation=(e)=>{
-        setConfirmation(e.target.value)
-        setModalOpen(false)
-    }
-
-    const handleUpdateBill=()=>{
-        setUpdateBill(false)
-        setBillUpdateTarget(0)
-        handleBillsUpdate()
-    }
-
     const handleNewBill=()=>{
         setCreateBill(false)
         handleBillsUpdate()
@@ -191,12 +140,6 @@ function AllBills() {
     const handleBillsUpdate=async()=>{
         await refetch()
     }
-
-    useEffect(()=>{
-        if (confirmation==='true') {
-            handleDelete()
-        }
-    }, [confirmation])
 
     useEffect(()=>{
         
@@ -250,12 +193,10 @@ function AllBills() {
                             <div className={styles.header}>Amount</div>
                             <div className={styles.header}>Paid</div>
                             <div className={styles.header}>Toggle</div>
-                            <div className={styles.header}>Update</div>
-                            <div className={styles.header}>Delete</div>
                         </div>
                         <div className={styles.tableBody}>
                             {renderCell().map((row)=>{
-                                    return row
+                                    return  row
                                 })}
                         </div>
                     </div>
@@ -308,45 +249,15 @@ function AllBills() {
                                 </div>
                                     {createBill?<CreateBill submitCallback={handleNewBill} />:<></>}
                                 </div>
-
                             ):(<></>)}
-                            {!createBill && updateBill?(
-                                <div>
-                                    <UpdateBill 
-                                    submitCallback={handleUpdateBill}
-                                    billID={billUpdateTarget} />
-                                </div>
-                                ):(<></>)}
                         </div>
                     </div>
                 </div>
-
             </div>
-            
-            
-            
             </div>
             ):(
             <></>
             )}
-            <ReactModal 
-                isOpen={modalOpen}
-                preventScroll={true}
-                shouldCloseOnEsc={false}
-                shouldCloseOnOverlayClick={false}
-                ariaHideApp={false}
-                contentLabel="Delete Confirmation" 
-                overlayClassName={styles.modalOverlay}
-                className={styles.modalStyle}
-            >
-
-                <p>Are you sure?</p>
-                <div className={styles.modalButtons}>
-                    <button value={true} id={styles.confirm} className='good-button' type='button' onClick={handleConfirmation}>CONFIRM</button>
-                    <button value={false}id={styles.cancel} className='bad-button' type='button' onClick={handleConfirmation}>CANCEL</button>
-                </div>
-
-            </ReactModal>
         </>
     )
 }
