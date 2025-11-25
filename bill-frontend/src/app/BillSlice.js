@@ -7,12 +7,14 @@ export const BillApi = createApi({
         credentials: 'include',
         baseUrl: API_BASE_URL
     }),
+    tagTypes: ["Bills"],
     endpoints: (builder) => ({
         getAllBill: builder.query({
             query: ()=>({
                 url: '/bill/all',
                 method: "GET"
-            })
+            }),
+            invalidatesTags: ["Bills"]
         }),
         getOneBill: builder.query({
             query: (id)=>({
