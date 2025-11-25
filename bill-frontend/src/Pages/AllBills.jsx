@@ -88,14 +88,14 @@ function AllBills() {
            let table = []
                 sorted.map((bill) => {
                         table.push(
-                            <div value={bill.id} onClick={handleNavigate} className={styles.tableDataRow}>
-                                <div className={styles.row}>{bill?.bill_name ?? ""}</div>
-                                <div className={styles.row}>{bill?.bank_name ?? ""}</div>
-                                <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
-                                <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
-                                <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
-                                <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
-                                <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
+                            <div className={styles.tableDataRow}>
+                            <a href={`/bills/${bill.id}`} className={styles.row}>{bill?.bill_name ?? ""}</a>
+                            <div className={styles.row}>{bill?.bank_name ?? ""}</div>
+                            <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
+                            <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
+                            <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
+                            <div className={styles.buttonContainer}><button id={styles.update} className="caution-button" type="button" value={bill.id} onClick={showBillUpdate}>^</button></div>
+                            <div className={styles.buttonContainer}><button id={styles.delete} className="bad-button" type="button" value={bill.id} onClick={handleModal}>X</button></div>
                             </div>
                             )
                         }
@@ -188,8 +188,7 @@ function AllBills() {
     }
 
     const handleNavigate=(e)=>{
-        const id = e.target.value
-        navigate(`/bills/${id}`)
+        console.log(e.target.value)
     }
 
     useEffect(()=>{
@@ -255,7 +254,7 @@ function AllBills() {
                         </div>
                         <div className={styles.tableBody}>
                             {renderCell().map((row)=>{
-                                    return row
+                                    return  row
                                 })}
                         </div>
                     </div>

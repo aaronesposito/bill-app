@@ -1,0 +1,26 @@
+/* Bill.module.css */
+
+
+.bill-outer {
+    display: block;
+}
+
+.bill-container {
+    display: block;
+    max-width: 250px;
+    margin-bottom: 10px;
+    background-color: white;
+    padding: 5px
+}
+
+
+.bill-container-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    padding-bottom: 2px;
+    overflow-wrap: normal;
+}
+
+.bill-container-Title {
+    font-weight: 600;
+}
