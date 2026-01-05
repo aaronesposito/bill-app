@@ -6,7 +6,7 @@ import styles from '../styles/Form.module.css'
 
 function UpdateBill({submitCallback, billID}){
 
-    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:0.00})
+    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:0.00, due_date:0})
     const {data:bill, isLoading: billLoading, isError: billError} = useGetOneBillQuery(billID)
     const {data:banks, isLoading: banksLoading, isError: banksError} = useGetAllBankQuery()
     const [update, updateResponse, isError, error] = useUpdateBillMutation()
@@ -24,7 +24,7 @@ function UpdateBill({submitCallback, billID}){
         e.preventDefault()
         try{
             const res = await update({id:billID, data: billData}).unwrap()
-            setBillData({bill_name:"", bank_id:0, amount:0.00})
+            setBillData({bill_name:"", bank_id:0, amount:0.00, due_date:0})
             submitCallback()
         }catch{
             setErrorMessage(err?.data?.error ?? 'Error updating Bill')
@@ -37,6 +37,7 @@ function UpdateBill({submitCallback, billID}){
                 bill_name: bill.data.bill_name ?? "",
                 bank_id: bill.data.bank_id ?? 0,
                 amount: Number(bill.data.amount) || 0,
+                due_date: bill.data.due_date || 0
             })}
     }, [bill])
     
@@ -94,6 +95,20 @@ function UpdateBill({submitCallback, billID}){
                 type="number"
                 name="amount"
                 value={billData.amount}
+                onChange={handleChange}
+                required
+                />
+                </label>
+                <label id={styles.amountLabel} className={styles.formInputLabel}>
+                    <div  id={styles.amountTag} className={styles.formTag}>
+                        Due Date
+                    </div>
+                <input
+                id={styles.billAmount}
+                className={styles.formInput}
+                type="number"
+                name="due_date"
+                value={billData.due_date}
                 onChange={handleChange}
                 required
                 />

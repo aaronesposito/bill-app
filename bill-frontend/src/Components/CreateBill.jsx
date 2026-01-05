@@ -4,7 +4,7 @@ import { useState } from "react"
 import styles from "../styles/Form.module.css"
 
 function CreateBill({submitCallback}){
-    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:""})
+    const [billData, setBillData] = useState({bill_name:"", bank_id:0, amount:"", due_date:""})
     const {data: banks, isLoading, isError} = useGetAllBankQuery()
     const [createBill, createBillResponse] = useCreateBillMutation()
     const [errorMessage, setErrorMessage] = useState("")
@@ -23,7 +23,7 @@ function CreateBill({submitCallback}){
         try {
             const res = await createBill(billData).unwrap()
             if (res?.success){
-                setBillData({bill_name:"", bank_id:0, amount:0.00})
+                setBillData({bill_name:"", bank_id:0, amount:0.00, due_date:0})
                 submitCallback()
             }
         }catch(err){
@@ -90,6 +90,20 @@ function CreateBill({submitCallback}){
                 type="number"
                 name="amount"
                 value={billData.amount}
+                onChange={updateBillData}
+                required
+                />
+                </label>
+                <label id={styles.amountLabel} className={styles.formInputLabel}>
+                    <div  id={styles.amountTag} className={styles.formTag}>
+                        Due Date
+                    </div>
+                <input
+                id={styles.billAmount}
+                className={styles.formInput}
+                type="number"
+                name="due_date"
+                value={billData.due_date}
                 onChange={updateBillData}
                 required
                 />

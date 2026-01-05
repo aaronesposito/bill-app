@@ -84,6 +84,10 @@ function OneBill(){
                     <div>{bill.data.amount}</div>
                 </div>
                 <div className={styles.billContainerRow}>
+                    <div className={styles.billContainerTitle}>Due</div>
+                    <div>{bill.data.due_date}</div>
+                </div>
+                <div className={styles.billContainerRow}>
                     <div className={styles.billContainerTitle}>Status</div>
                     <div>{bill.data.paid?"Paid":"Unpaid"}</div>
                 </div>

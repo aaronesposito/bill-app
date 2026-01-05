@@ -84,7 +84,8 @@ TABLE_BUILD = [
     user_account INT REFERENCES account(id) ON DELETE CASCADE,
     bank_id INT REFERENCES bank(id) ON DELETE CASCADE,
     amount REAL, 
-    paid BOOL DEFAULT FALSE
+    paid BOOL DEFAULT FALSE,
+    due_date INT DEFAULT 0
     );
     """,
     ]
