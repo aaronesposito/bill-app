@@ -81,6 +81,7 @@ function AllBills() {
                             <div className={styles.row}>{bill?.bank_name ?? ""}</div>
                             <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
                             <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
+                            <div className={styles.row}>{bill.due_date}</div>
                             <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
                             </div>
                             )
@@ -166,6 +167,7 @@ function AllBills() {
                     <option value='bill_name'>Name</option>
                     <option value='bank_name'>Bank</option>
                     <option value='amount'>Amount</option>
+                    <option value='due_date'>Due</option>
                     <option value='paid'>Paid</option>
                 </select>
             </label>
@@ -192,6 +194,7 @@ function AllBills() {
                             <div className={styles.header}>Bank</div>
                             <div className={styles.header}>Amount</div>
                             <div className={styles.header}>Paid</div>
+                            <div className={styles.header}>Due</div>
                             <div className={styles.header}>Toggle</div>
                         </div>
                         <div className={styles.tableBody}>

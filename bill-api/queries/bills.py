@@ -9,12 +9,14 @@ def create_bill(data, uuid):
             bill_name,
             user_account,
             bank_id,
-            amount
+            amount,
+            due_date
             )VALUES(
             %(bill_name)s,
             %(user_account)s,
             %(bank_id)s,
-            %(amount)s
+            %(amount)s,
+            %(due_date)s
             )
             RETURNING id
             """
@@ -34,13 +36,14 @@ def get_bill(id):
         "user_account": result[2],
         "bank_id": result[3],
         "amount": result[4],
-        "paid": result[5]
+        "paid": result[5],
+        "due_date": result[6]
         } if result else None
 
 def get_bills(uuid):
     user_id = get_id(uuid)
     query = """
-            SELECT b.id, b.bill_name, ba.bank_name, amount, paid 
+            SELECT b.id, b.bill_name, ba.bank_name, amount, paid, due_date 
             FROM bill as b
             INNER JOIN bank as ba on b.bank_id = ba.id
             WHERE user_account = %s
@@ -51,12 +54,13 @@ def get_bills(uuid):
         "bill_name": row[1],
         "bank_name": row[2],
         "amount": row[3],
-        "paid": row[4]
+        "paid": row[4],
+        "due_date": row[5]
     } for row in result] if result else None
 
 def update_bill(data, id):
     fields = ""
-    allowed_keys = ["bill_name","bank_id","amount","paid"]
+    allowed_keys = ["bill_name","bank_id","amount","paid", "due_date"]
     patch = {}
     for key in data.keys():
         if key not in allowed_keys:
@@ -76,7 +80,8 @@ def update_bill(data, id):
         "bill_name":result[1],
         "bank_id":result[3],
         "amount":result[4],
-        "paid":result[5]
+        "paid":result[5],
+        "due_date":result[6]
     } if result else None
 
 def delete_bill(id):
@@ -97,5 +102,6 @@ def bills_by_bank(bank_id):
         "bill_name":row[1],
         "bank_id":row[3],
         "amount":row[4],
-        "paid":row[5]
+        "paid":row[5],
+        "due_date": row[6]
     } for row in result]
