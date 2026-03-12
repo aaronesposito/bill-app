@@ -6,7 +6,7 @@ import UpdateBill from "../Components/UpdateBill";
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/Bill.module.css'
 import ReactModal from "react-modal";
-import modal from '../styles/bills.module.css'
+import modal from '../styles/Bills.module.css'
 
 
 function OneBill(){
