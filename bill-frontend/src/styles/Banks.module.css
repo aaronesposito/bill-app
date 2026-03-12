@@ -2,45 +2,41 @@
 
 
 .bank-list {
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
+    display: grid;
+    grid-template-rows: auto(1fr);
+    gap:5px;
+    justify-content: space-around;
     font-size: 23px;
-    padding-top: 10px;
-    background-color: #d3eea2;
-    border: 1px solid rgba(0, 0, 0, 0.356);
-    height: 80%;
-    overflow-y: auto;
-    padding: 25px;
-    width: 40%
 
 }
 
 .bank-row {
-    display: flex;
-    padding-top: 15px
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 
 .banks-container {
-    width: 50vw;
-    height: 80%;
+    display: flex;
+    flex-direction: column;
+    width:800px;
     justify-self: center;
     align-items: center;
-    height: 80%
 }
 
 .bank-list-with-header {
-    padding: 20px;
-    height: 100%
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-right: 150px
 }
 
 .delete-button-container {
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
 }
 
 #delete-button{
-    padding: 5px;
-    margin-right: 10px;
+    height:17px;
+    border-radius: 3px;
+    aspect-ratio: 1 / 1;
 }

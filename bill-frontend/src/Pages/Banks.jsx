@@ -118,26 +118,26 @@ function Banks(){
                 <button type='submit' className='good-button'>Add Bank</button>
             </form>
         <div className={styles.bankListWithHeader}>
-        <div style={{fontSize:25 + 'px', paddingBottom:15 + 'px'}}>Available Banks:</div>
-        <div className={styles.bankList}>
-            {banks.data.map((bank)=>{
-                return(
-                    <div key={bank.id}>
-                        <div className={styles.bankRow}>
+            <div style={{fontSize:25 + 'px'}}>Available Banks:</div>
+            <div className={styles.bankList}>
+                {banks.data.map((bank)=>{
+                    return(
+                        <div key={bank.id}>
+                            <div className={styles.bankRow}>
+                                <div style={{paddingRight:10 + 'px'}}>{bank.bank_name}</div>
                                 <div className={styles.deleteButtonContainer}>
-                                    <button 
-                                    id={styles.deleteButton}
-                                    className="bad-button"
-                                    value={bank.id}
-                                    data-bank-name={bank.bank_name} 
-                                    type='button'
-                                    onClick={handleModalOpen}
-                                    >X</button>
+                                        <button 
+                                        id={styles.deleteButton}
+                                        className="bad-button"
+                                        value={bank.id}
+                                        data-bank-name={bank.bank_name} 
+                                        type='button'
+                                        onClick={handleModalOpen}
+                                        >X</button>
                                 </div>
-                            <div style={{paddingRight:10 + 'px'}}>{bank.bank_name}</div>
+                            </div>
                         </div>
-                    </div>
-                    )
+                        )
                 })}
             </div>
         </div>
@@ -155,7 +155,7 @@ function Banks(){
             >
                 {!hasBills?(
                     <>
-                    <p >Are you sure?</p>
+                    <div className={modal.text}>Are you sure?</div>
                     <div className={modal.modalButtons}>
                         <button id={modal.confirm} value={true} className='good-button' type='button' onClick={handleConfirmation}>CONFIRM</button>
                         <button id={modal.cancel} className='bad-button' type='button' onClick={()=>setModalOpen(false)}>CANCEL</button>

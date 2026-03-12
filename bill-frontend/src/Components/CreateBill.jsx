@@ -94,12 +94,13 @@ function CreateBill({submitCallback}){
                 required
                 />
                 </label>
-                <label id={styles.amountLabel} className={styles.formInputLabel}>
-                    <div  id={styles.amountTag} className={styles.formTag}>
+                <br/>
+                <label id={styles.dateLabel} className={styles.formInputLabel}>
+                    <div  id={styles.dateTag} className={styles.formTag}>
                         Due Date
                     </div>
                 <input
-                id={styles.billAmount}
+                id={styles.billDate}
                 className={styles.formInput}
                 type="number"
                 name="due_date"

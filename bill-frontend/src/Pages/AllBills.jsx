@@ -6,6 +6,7 @@ import { useGetAllBankQuery } from '../app/BankSlice'
 import CreateBill from '../Components/CreateBill'
 import UpdateBill from '../Components/UpdateBill'
 import styles from '../styles/Bills.module.css'
+import reload from '/public/toggle.png'
 
 function AllBills() {
 
@@ -82,7 +83,7 @@ function AllBills() {
                             <div className={styles.row}>{(bill?.amount.toFixed(2)) ?? ""}</div>
                             <div className={styles.row}>{bill.paid?"Paid":"Unpaid"}</div>
                             <div className={styles.row}>{bill.due_date}</div>
-                            <div className={styles.buttonContainer}><button id={styles.toggle} className="good-button" type="button" onClick={() => togglePaid(bill)}>O</button></div>
+                            <div className={styles.row}><button className={styles.resetButton} type="button" onClick={() => togglePaid(bill)}><img className={styles.resetImage} src={reload}/></button></div>
                             </div>
                             )
                         }
@@ -160,32 +161,38 @@ function AllBills() {
         <>
             {bills !== undefined ?(
             <div>
-                <div className={styles.tableController}>
-            <label className= {styles.sort}>
-                Sort By:
-                <select name="sort" onChange={handleSortChange}>
-                    <option value='bill_name'>Name</option>
-                    <option value='bank_name'>Bank</option>
-                    <option value='amount'>Amount</option>
-                    <option value='due_date'>Due</option>
-                    <option value='paid'>Paid</option>
-                </select>
-            </label>
-            <label className= {styles.filter}>
-                Filter By Bank:
-                <select name="filter" onChange={handleFilterChange}>
-                    <option value='all'>No</option>
-                    {banks.data.map((bank)=>{
-                        return(
-                        <option key={bank.id} value={bank.bank_name}>{bank.bank_name}</option>
-                        )
-                    })}
-                </select>
                 <div>
-                    <button type='button' id={styles.filterButton} className="good-button" onClick={toggleAllUnpaid}>Set All Unpaid</button>
+                    <div className={styles.tableController}>
+                        <div className={styles.searchFilter}>
+                            <label className= {styles.sort}>
+                                <div className={styles.headerTag}>
+                                Sort By:
+                                </div>
+                                <select name="sort" onChange={handleSortChange}>
+                                    <option value='bill_name'>Name</option>
+                                    <option value='bank_name'>Bank</option>
+                                    <option value='amount'>Amount</option>
+                                    <option value='due_date'>Due</option>
+                                    <option value='paid'>Paid</option>
+                                </select>
+                            </label>
+                            <label className= {styles.filter}>
+                                <div className={styles.headerTag}>
+                                Filter By Bank:
+                                </div>
+                                <select name="filter" onChange={handleFilterChange}>
+                                    <option value='all'>No</option>
+                                    {banks.data.map((bank)=>{
+                                        return(
+                                        <option key={bank.id} value={bank.bank_name}>{bank.bank_name}</option>
+                                        )
+                                    })}
+                                </select>
+                        </label>
+                        </div>
+                        <button type='button' id={styles.filterButton} className="good-button" onClick={toggleAllUnpaid}>Set All Unpaid</button>
+                    </div>
                 </div>
-            </label>
-            </div>
                 <div className={styles.controller}>
                     <div>
                     <div className={styles.tableContainer}>
