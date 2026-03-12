@@ -6,6 +6,7 @@ import UpdateBill from "../Components/UpdateBill";
 import { useNavigate } from "react-router-dom";
 import styles from '../styles/Bill.module.css'
 import ReactModal from "react-modal";
+import modal from '../styles/bills.module.css'
 
 
 function OneBill(){
@@ -68,36 +69,36 @@ function OneBill(){
         <div className={styles.billOuter}>
             <div className={styles.billContainer}>
                 <div className={styles.billContainerRow}>
-                    <div className={styles.billContainerTitle}>ID</div>
-                    <div>{bill.data.id}</div>
-                </div>
-                <div className={styles.billContainerRow}>
                     <div className={styles.billContainerTitle}>Name</div>
-                    <div>{bill.data.bill_name}</div>
+                    <div className={styles.billData}>{bill.data.bill_name}</div>
                 </div>
                 <div className={styles.billContainerRow}> 
                     <div className={styles.billContainerTitle}>Bank</div>
-                    <div>{bank.data.bank_name}</div>
+                    <div className={styles.billData}>{bank.data.bank_name}</div>
                 </div>
                 <div className={styles.billContainerRow}>
                     <div className={styles.billContainerTitle}>Amount</div>
-                    <div>{bill.data.amount}</div>
+                    <div className={styles.billData}>{bill.data.amount}</div>
                 </div>
                 <div className={styles.billContainerRow}>
                     <div className={styles.billContainerTitle}>Due</div>
-                    <div>{bill.data.due_date}</div>
+                    <div className={styles.billData}>{bill.data.due_date}</div>
                 </div>
                 <div className={styles.billContainerRow}>
                     <div className={styles.billContainerTitle}>Status</div>
-                    <div>{bill.data.paid?"Paid":"Unpaid"}</div>
+                    <div className={styles.billData}>{bill.data.paid?"Paid":"Unpaid"}</div>
                 </div>
             </div>
-            <button type="button" onClick={toggleUpdate}>Update</button>
-            <button type="button" onClick={handleModal}>Delete</button>
+            <div className={styles.updateButtonsContainer}>
+            <button type="button" className='good-button' onClick={toggleUpdate}>Update</button>
+            <button type="button" className='bad-button' onClick={handleModal}>Delete</button>
+            <button type="button" className='good-button' onClick={handleNavigate}>Back</button>
+            </div>
+            <div className={styles.updateFormContainer}>
             {update ? (<UpdateBill submitCallback={handleUpdateSubmit}
                         billID={bill.data.id}
                 />):(<></>)}
-            <button type="button" onClick={handleNavigate}>Back</button>
+            </div>
                         <ReactModal 
                             isOpen={modalOpen}
                             preventScroll={true}
@@ -105,14 +106,14 @@ function OneBill(){
                             shouldCloseOnOverlayClick={false}
                             ariaHideApp={false}
                             contentLabel="Delete Confirmation" 
-                            overlayClassName={styles.modalOverlay}
-                            className={styles.modalStyle}
+                            overlayClassName={modal.modalOverlay}
+                            className={modal.modalStyle}
                         >
             
                             <p>Are you sure?</p>
-                            <div className={styles.modalButtons}>
-                                <button value={true} id={styles.confirm} className='good-button' type='button' onClick={handleDelete}>CONFIRM</button>
-                                <button value={false}id={styles.cancel} className='bad-button' type='button' onClick={handleConfirmation}>CANCEL</button>
+                            <div className={modal.modalButtons}>
+                                <button value={true} id={modal.confirm} className='good-button' type='button' onClick={handleDelete}>CONFIRM</button>
+                                <button value={false}id={modal.cancel} className='bad-button' type='button' onClick={handleConfirmation}>CANCEL</button>
                             </div>
             
                         </ReactModal>

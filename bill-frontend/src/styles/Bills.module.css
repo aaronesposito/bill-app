@@ -1,6 +1,13 @@
 /* Bills.module.css */
 
-
+.reset-image {
+    width: 30px;
+}
+.reset-button {
+    max-width: min-content;
+    background-color: rgb(231, 183, 51);
+    border: none;
+}
 
 .table-container {
     display:flex;
@@ -45,17 +52,25 @@
     height: fit-content;
 }
 
+.search-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 .row, .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 30px;
     justify-content: center;
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, 0.062);
 }
 
 .table-controller {
-    display:flex
+    display:flex;
+    justify-content: space-between;
 }
 
 .sort {
@@ -71,12 +86,16 @@
     justify-content: center;
 }
 
+.header-tag {
+    padding-right: 5px;
+}
+
 .total-container {
     display: flex;
     background-color: var(--terciary-color);
     width: min-content;
     margin-bottom: 15px;
-    border: 2px solid rgba(0, 0, 0, 0.377)
+    border: 1px solid black
 }
 
 .total-label {
@@ -90,7 +109,7 @@
 
 .total-amount {
     padding: 8px;
-    background: #e2f7bb;
+    background: var(--terciary-color);
     height: 100%;
     width: 100%;
 }
@@ -119,15 +138,15 @@
 }
 
 .small-table-row {
-    display: flex;
-    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-top: 1px solid black;
 }
 
 .small-table-value {
-    width:auto;
-    padding: 5px 10px;
+    display: block;
     width: 50%;
-    border-left: 1px solid black 
+    padding: 5px 10px;
 }
 
 .data-form-container {
@@ -164,26 +183,32 @@
   }
 
 .modal-style {
-    background: #d4ebc9;
+    background: var(--terciary-color);
     top: 30vw;
     left: 40vw;
     right: 40vw;
     bottom: 30vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: fit-content;
+    width: fit-content;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    place-items: center;
     font-size: 25px;
     text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.123);
 }
 
+.text {
+    padding: 25px
+}
 
 .modal-buttons {
-    display: flex;
-    width: 20vw;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-content: space-around;
+    padding: 15px;
 }
 
 #text {
@@ -200,7 +225,7 @@
     height: 30px
 }
 
-#toggle, #update, #delete {
+#update, #delete {
     width: 30px;
     padding: 5px;
 }

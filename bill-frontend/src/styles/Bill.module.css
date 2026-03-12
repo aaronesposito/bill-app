@@ -2,25 +2,57 @@
 
 
 .bill-outer {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
 }
 
 .bill-container {
     display: block;
-    max-width: 250px;
+    width: 300px;
     margin-bottom: 10px;
     background-color: white;
-    padding: 5px
+    padding: 5px;
+    height: fit-content;
+    background-color: var(--terciary-color);
+    border: 1px solid black
 }
 
+.bill-data {
+    display: block;
+    border: 1px solid black;
+    padding: 3px;
+    padding-left: 10px;
+    background-color: white;
+}
+
+.bill-container-Title {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 3px;
+    padding-left: 10px
+}
 
 .bill-container-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
-    padding-bottom: 2px;
+    grid-template-columns: 1fr 2fr;
+    padding-bottom:15px;
     overflow-wrap: normal;
 }
 
 .bill-container-Title {
     font-weight: 600;
+}
+
+.update-buttons-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    height: 40px
+}
+
+.update-form-container {
+    padding-top: 40px;
 }
