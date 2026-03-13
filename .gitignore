@@ -84,3 +84,4 @@ logs/
 # ---ENV---
 *.env
 .env
+*.env.*
